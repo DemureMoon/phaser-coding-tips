@@ -21,7 +21,7 @@
         this.player = null;
 
         this.stationary = null;
-        this.clouds = null;
+        this.bunny = null;
 
         this.facing = 'left';
         this.jumpTimer = 0;
@@ -101,6 +101,10 @@
             this.cursors = this.input.keyboard.createCursorKeys();
 
             this.clouds.callAll('start');
+
+
+             //adding bunny
+            this.bunny = this.add.sprite(20, 350, 'bunny');
 
 
 
