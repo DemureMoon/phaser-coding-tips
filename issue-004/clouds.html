@@ -59,6 +59,7 @@
             this.load.image('platform', 'assets/platform.png');
             this.load.image('cloud-platform', 'assets/cloud-platform.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
+            this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
 
             //  Note: Graphics are Copyright 2015 Photon Storm Ltd.
 
@@ -75,9 +76,10 @@
             //  Platforms that don't move
             this.stationary = this.add.physicsGroup();
 
-            this.stationary.create(0, 96, 'platform');
-            this.stationary.create(632, 220, 'platform');
+            this.stationary.create(90, 350, 'platform');
+            this.stationary.create(532, 380, 'platform');
             this.stationary.create(1100, 300, 'platform');
+
 
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
@@ -108,8 +110,8 @@
                 { x: "-500", xSpeed: 4000, xEase: "Expo.easeOut", y: "+200", ySpeed: 3000, yEase: "Linear" }
             ]);
 
-            //  The Player
-            this.player = this.add.sprite(32, 0, 'dude');
+            //  The Player start position
+            this.player = this.add.sprite(0, 300, 'dude');
 
             this.physics.arcade.enable(this.player);
 
@@ -124,6 +126,8 @@
             this.cursors = this.input.keyboard.createCursorKeys();
 
             this.clouds.callAll('start');
+
+
 
         },
 
