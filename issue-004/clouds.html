@@ -106,6 +106,10 @@
              //adding bunny
             this.bunny = this.add.sprite(20, 350, 'bunny');
 
+            this.physics.arcade.enable(this.bunny);
+
+            this.player.body.collideWorldBounds = true;
+            this.player.body.setSize(20, 32, 5, 16);
 
 
         },
