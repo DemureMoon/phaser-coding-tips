@@ -77,9 +77,33 @@
             //  Platforms that don't move
             this.stationary = this.add.physicsGroup();
 
-            this.stationary.create(180, 390, 'platform');
-            this.stationary.create(360, 320, 'platform');
-            this.stationary.create(560, 260, 'platform');
+            //Platforms
+            this.stationary.create(180, 355, 'platform');
+            this.stationary.create(360, 300, 'platform');
+            this.stationary.create(560, 240, 'platform');
+            this.stationary.create(694, 240, 'platform');
+            this.stationary.create(828, 209, 'platform');
+
+            //Ground
+            this.stationary.create(0, 450, 'platform');
+            this.stationary.create(134, 450, 'platform');
+            this.stationary.create(268, 450, 'platform');
+            this.stationary.create(402, 450, 'platform');
+            this.stationary.create(536, 450, 'platform');
+            this.stationary.create(670, 450, 'platform');
+            this.stationary.create(804, 450, 'platform');
+            this.stationary.create(938, 450, 'platform');
+            this.stationary.create(1072, 450, 'platform');
+            this.stationary.create(1206, 450, 'platform');
+            this.stationary.create(1340, 450, 'platform');
+            this.stationary.create(1474, 450, 'platform');
+            this.stationary.create(1608, 450, 'platform');
+            this.stationary.create(1742, 450, 'platform');
+            this.stationary.create(1876, 450, 'platform');
+
+
+
+
 
 
             this.stationary.setAll('body.allowGravity', false);
@@ -104,13 +128,7 @@
             this.clouds.callAll('start');
 
 
-            //adding bunny
-            this.bunny = this.add.sprite(20, 350, 'bunny');
 
-            this.physics.arcade.enable(this.bunny);
-
-            this.player.body.collideWorldBounds = true;
-            this.player.body.setSize(20, 32, 5, 16);
 
 
         },
