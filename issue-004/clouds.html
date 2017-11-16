@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Cloud Platforms</title>
+    <title>Platform Game(No Clouds)</title>
     <meta charset="utf-8">
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
 </head>
@@ -21,7 +21,7 @@
         this.player = null;
 
         this.stationary = null;
-        this.bunny = null;
+        this.stars = null;
 
         this.facing = 'left';
         this.jumpTimer = 0;
@@ -60,13 +60,15 @@
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
             this.load.image('cloud-platform', 'assets/cloud-platform.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
-            this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
+            this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
 
             //  Note: Graphics are Copyright 2015 Photon Storm Ltd.
 
         },
 
         create: function () {
+
+
 
             this.background = this.add.tileSprite(0, 0, 640, 480, 'background');
             this.background.fixedToCamera = true;
@@ -102,13 +104,30 @@
             this.stationary.create(1876, 450, 'platform');
 
 
-
-
-
-
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
 
+            //  Finally some stars to collect
+            stars = game.add.group();
+
+            //  We will enable physics for any star that is created in this group
+            stars.enableBody = true;
+
+
+            //  Here we'll create 12 of them evenly spaced apart
+            for (var i = 0; i < 12; i++)
+            {
+            //  Create a star inside of the 'stars' group
+            var star = stars.create(i * 70, 0, 'star');
+
+            //  Let gravity do its thing
+             star.body.gravity.y = 300;
+
+            //  This just gives each star a slightly random bounce value
+            star.body.bounce.y = 0.7 + Math.random() * 0.2;
+
+
+            }
 
             //  The Player start position
             this.player = this.add.sprite(0, 300, 'dude');
@@ -129,9 +148,9 @@
 
 
 
-
-
         },
+
+
 
         customSep: function (player, platform) {
 
@@ -221,6 +240,9 @@
             //  Do this AFTER the collide check, or we won't have blocked/touching set
             var standing = this.player.body.blocked.down || this.player.body.touching.down || this.locked;
 
+            //  Collide the player and the stars with the platforms
+            this.physics.arcade.collide(this.stars, this.stationary);
+
             this.player.body.velocity.x = 0;
 
             if (this.cursors.left.isDown)
@@ -278,6 +300,7 @@
             }
 
         }
+
 
     };
 
