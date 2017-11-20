@@ -113,20 +113,21 @@
             //  We will enable physics for any star that is created in this group
             this.stars.enableBody = true;
 
-
             //  Here we'll create 12 of them evenly spaced apart
             for (var i = 0; i < 12; i++)
             {
             //  Create a star inside of the 'stars' group
-            var star = this.stars.create(i * 70, 0, 'star');
+            // var star = this.stars.create(i * 70, 0, 'star');
+            var star = this.stars.create((i + Math.random()) * 70, 0, 'star');
+
+
+            star.body.setSize(25, 25, 10, 20)
 
             //  Let gravity do its thing
             star.body.gravity.y = 300;
 
             //  This just gives each star a slightly random bounce value
             star.body.bounce.y = 0.7 + Math.random() * 0.2;
-
-
             }
 
             //  The Player start position
@@ -135,7 +136,7 @@
             this.physics.arcade.enable(this.player);
 
             this.player.body.collideWorldBounds = true;
-            this.player.body.setSize(20, 32, 5, 16);
+            this.player.body.setSize(84, 52, 0, 0);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
@@ -147,7 +148,7 @@
             this.clouds.callAll('start');
 
 
-             },
+        },
 
         update: function () {
             this.physics.arcade.collide(this.stars, this.stationary);
@@ -292,7 +293,7 @@
                     this.facing = 'idle';
                 }
             }
-            
+
             if (standing && this.cursors.up.isDown && this.time.time > this.jumpTimer)
             {
                 if (this.locked)
