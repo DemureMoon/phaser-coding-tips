@@ -55,8 +55,8 @@
             // this.load.baseURL = 'http://files.phaser.io.s3.amazonaws.com/codingtips/issue004/';
             this.load.crossOrigin = 'anonymous';
 
-            this.load.image('trees', 'assets/trees-h.png');
-            this.load.image('background', 'assets/clouds-h.png');
+            this.load.image('trees', 'assets/forest.png');
+            this.load.image('background', 'assets/CloudySky.png');
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
             this.load.image('cloud-platform', 'assets/cloud-platform.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
@@ -107,25 +107,20 @@
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
 
+
             //  Finally some stars to collect
             this.stars = game.add.group();
-
             //  We will enable physics for any star that is created in this group
             this.stars.enableBody = true;
-
-
             //  Here we'll create 12 of them evenly spaced apart
             for (var i = 0; i < 12; i++)
             {
             //  Create a star inside of the 'stars' group
             var star = this.stars.create(i * 70, 0, 'star');
-
             //  Let gravity do its thing
             star.body.gravity.y = 300;
-
             //  This just gives each star a slightly random bounce value
             star.body.bounce.y = 0.7 + Math.random() * 0.2;
-
 
             }
 
@@ -135,7 +130,7 @@
             this.physics.arcade.enable(this.player);
 
             this.player.body.collideWorldBounds = true;
-            this.player.body.setSize(20, 32, 5, 16);
+            this.player.body.setSize(90, 52, 0, -3);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
