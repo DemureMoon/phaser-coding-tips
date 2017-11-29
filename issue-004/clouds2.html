@@ -123,12 +123,14 @@
 
             // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
-            // Try using a variable: this.direction = this.rnd.integerInRange(-1, 1);
+            // Try using a variable:
+            this.direction = this.rnd.between(-1, 1);
             // Look for rnd function without a range since 0 erases the bunny.
             star.anchor.setTo(0.5, 0.5);
-            //star.scale.x = (.6 * this.rnd.integerInRange(-1, 1))
-            star.scale.x = (.6 * this.rnd.between(-1, 1))
-            star.scale.y = .6
+            //star.scale.x = (.6 * this.rnd.integerInRange(-1, 1));
+            //star.scale.x = (.6 * this.rnd.between(-1, 1));
+            star.scale.x = (.6 * this.direction);
+            star.scale.y = .6;
 
             // Multiply values by scale so bunnies sit on ground. Needs some work
             // star.body.setSize(25, 25, 10, 20)
