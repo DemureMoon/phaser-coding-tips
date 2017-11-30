@@ -62,13 +62,9 @@
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
 
-            //  Note: Graphics are Copyright 2015 Photon Storm Ltd.
-
         },
 
         create: function () {
-
-
 
             this.background = this.add.tileSprite(0, 0, 640, 480, 'background');
             this.background.fixedToCamera = true;
@@ -103,23 +99,49 @@
             this.stationary.create(1742, 450, 'platform');
             this.stationary.create(1876, 450, 'platform');
 
-
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
 
 
             //  Finally some stars to collect
             this.stars = game.add.group();
+
             //  We will enable physics for any star that is created in this group
             this.stars.enableBody = true;
-            //  Here we'll create 12 of them evenly spaced apart
-            for (var i = 0; i < 12; i++)
+
+            //  Here we'll create 30 of them randomly spaced apart
+            //But suposedly it isn't 30, it varies between about 17 and 28
+            for (var i = 0; i < 40; i++)
             {
-            //  Create a star inside of the 'stars' group
-            var star = this.stars.create(i * 70, 0, 'star');
-            //  Let gravity do its thing
+
+                //  Create a star inside of the 'stars' group
+            // var star = this.stars.create(i * 70, 0, 'star');
+            var star = this.stars.create((i + Math.random()) * 35, 0, 'star');
+
+                // Use anchor to allow bunny to be flipped on its centerlines
+            // Use scale to reduce bunny size and allow image to flip using negative values
+            // Try using a variable:
+            this.direction = this.rnd.between(-1, 1);
+
+                // Look for rnd function without a range since 0 erases the bunny.
+            star.anchor.setTo(0.5, 0.5);
+
+                //star.scale.x = (.6 * this.rnd.integerInRange(-1, 1));
+            //star.scale.x = (.6 * this.rnd.between(-1, 1));
+            star.scale.x = (.6 * this.direction);
+            star.scale.y = .6;
+
+            //So the bunnies don't spawn off the map...?
+            star.body.collideWorldBounds = true;
+
+                // Multiply values by scale so bunnies sit on ground. Needs some work.
+            // star.body.setSize(25, 25, 10, 20)
+            star.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+
+                //  Let gravity do its thing
             star.body.gravity.y = 300;
-            //  This just gives each star a slightly random bounce value
+
+                //  This just gives each star a slightly random bounce value
             star.body.bounce.y = 0.7 + Math.random() * 0.2;
 
             }
