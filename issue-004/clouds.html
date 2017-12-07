@@ -11,7 +11,7 @@
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(640, 480, Phaser.CANVAS, 'game');
+    var game = new Phaser.Game(940, 480, Phaser.CANVAS, 'game');
 
     var PhaserGame = function () {
 
@@ -68,10 +68,10 @@
 
         create: function () {
 
-            this.background = this.add.tileSprite(0, 0, 640, 480, 'background');
+            this.background = this.add.tileSprite(0, 0, 940, 480, 'background');
             this.background.fixedToCamera = true;
 
-            this.trees = this.add.tileSprite(0, 364, 640, 116, 'trees');
+            this.trees = this.add.tileSprite(0, 364, 940, 116, 'trees');
             this.trees.fixedToCamera = true;
 
 
