@@ -22,6 +22,8 @@
 
         this.stationary = null;
         this.stars = null;
+        this.hearts = null;
+        this.collectStar = null;
 
         this.facing = 'left';
         this.jumpTimer = 0;
@@ -61,7 +63,7 @@
             this.load.image('cloud-platform', 'assets/cloud-platform.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
-
+            this.load.image('hearts', 'assets/Hearts117x30.png');
         },
 
         create: function () {
@@ -72,10 +74,11 @@
             this.trees = this.add.tileSprite(0, 364, 640, 116, 'trees');
             this.trees.fixedToCamera = true;
 
+
             //  Platforms that don't move
             this.stationary = this.add.physicsGroup();
 
-            //Platforms
+            //PLatforms
             this.stationary.create(180, 355, 'platform');
             this.stationary.create(360, 300, 'platform');
             this.stationary.create(560, 240, 'platform');
@@ -101,6 +104,15 @@
 
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
+
+
+            //Adding health bar
+            this.hearts = this.add.physicsGroup();
+
+            this.hearts.create(10, 10, 'hearts');
+            this.hearts.setAll('body.allowGravity', false);
+            this.hearts.setAll('body.immovable', true);
+            this.hearts.fixedToCamera = true;
 
 
             //  Finally some stars to collect
@@ -148,7 +160,6 @@
 
             //  The Player start position
             this.player = this.add.sprite(0, 300, 'dude');
-
             this.physics.arcade.enable(this.player);
 
             this.player.body.collideWorldBounds = true;
@@ -158,21 +169,18 @@
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
             this.camera.follow(this.player);
-
             this.cursors = this.input.keyboard.createCursorKeys();
 
-            this.clouds.callAll('start');
 
 
              },
 
         update: function () {
+
             this.physics.arcade.collide(this.stars, this.stationary);
 
             //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
-
-
 
         },
 
@@ -261,7 +269,7 @@
             this.trees.tilePosition.x = -(this.camera.x * 0.9);
 
             this.physics.arcade.collide(this.player, this.stationary);
-            this.physics.arcade.collide(this.player, this.clouds, this.customSep, null, this);
+
 
             //  Do this AFTER the collide check, or we won't have blocked/touching set
             var standing = this.player.body.blocked.down || this.player.body.touching.down || this.locked;
@@ -329,69 +337,6 @@
 
 
     };
-
-
-
-    CloudPlatform = function (game, x, y, key, group) {
-
-        if (typeof group === 'undefined') { group = game.world; }
-
-        Phaser.Sprite.call(this, game, x, y, key);
-
-        game.physics.arcade.enable(this);
-
-        this.anchor.x = 0.5;
-
-        this.body.customSeparateX = true;
-        this.body.customSeparateY = true;
-        this.body.allowGravity = false;
-        this.body.immovable = true;
-
-        this.playerLocked = false;
-
-        group.add(this);
-
-    };
-
-    CloudPlatform.prototype = Object.create(Phaser.Sprite.prototype);
-    CloudPlatform.prototype.constructor = CloudPlatform;
-
-    CloudPlatform.prototype.addMotionPath = function (motionPath) {
-
-        this.tweenX = this.game.add.tween(this.body);
-        this.tweenY = this.game.add.tween(this.body);
-
-        //  motionPath is an array containing objects with this structure
-        //  [
-        //   { x: "+200", xSpeed: 2000, xEase: "Linear", y: "-200", ySpeed: 2000, yEase: "Sine.easeIn" }
-        //  ]
-
-        for (var i = 0; i < motionPath.length; i++)
-        {
-            this.tweenX.to( { x: motionPath[i].x }, motionPath[i].xSpeed, motionPath[i].xEase);
-            this.tweenY.to( { y: motionPath[i].y }, motionPath[i].ySpeed, motionPath[i].yEase);
-        }
-
-        this.tweenX.loop();
-        this.tweenY.loop();
-
-    };
-
-    CloudPlatform.prototype.start = function () {
-
-        this.tweenX.start();
-        this.tweenY.start();
-
-    };
-
-    CloudPlatform.prototype.stop = function () {
-
-        this.tweenX.stop();
-        this.tweenY.stop();
-
-    };
-
-
 
     game.state.add('Game', PhaserGame, true);
 
