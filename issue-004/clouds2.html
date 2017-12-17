@@ -31,6 +31,10 @@
         this.wasLocked = false;
         this.willJump = false;
 
+        this.score = 0;
+        this.scoreText = null;
+
+
     };
 
     PhaserGame.prototype = {
@@ -40,6 +44,7 @@
             this.game.renderer.renderSession.roundPixels = true;
 
             this.world.resize(640*3, 480);
+
 
             this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -62,12 +67,14 @@
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
 
+
             //  Note: Graphics are Copyright 2015 Photon Storm Ltd.
 
         },
 
-        create: function () {
 
+
+        create: function () {
 
 
             this.background = this.add.tileSprite(0, 0, 640, 480, 'background');
@@ -156,23 +163,16 @@
 
             this.camera.follow(this.player);
 
+            // Display the score
+            this.scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000', });
+            this.scoreText.fixedToCamera = true;
+
             this.cursors = this.input.keyboard.createCursorKeys();
 
             this.clouds.callAll('start');
 
 
         },
-
-        update: function () {
-            this.physics.arcade.collide(this.stars, this.stationary);
-
-            //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
-
-
-
-        },
-
 
 
         customSep: function (player, platform) {
@@ -266,6 +266,10 @@
             //  Collide the player and the stars with the platforms
             this.physics.arcade.collide(this.stars, this.stationary);
 
+    // Added collisions
+            //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+            this.game.physics.arcade.overlap(this.player, this.stars, collectStar, null, this);
+
             this.player.body.velocity.x = 0;
 
             if (this.cursors.left.isDown)
@@ -327,6 +331,15 @@
 
     };
 
+
+//Added scoring
+    function collectStar (player, star) {
+
+        // Removes the star from the screen
+        star.kill();
+        this.score += 10;
+        this.scoreText.text = 'Score: ' + this.score;
+    }
 
 
     CloudPlatform = function (game, x, y, key, group) {
@@ -394,7 +407,7 @@
 
     </script>
 
-    <a href="http://phaser.io"><img src="http://files.phaser.io.s3.amazonaws.com/codingtips/issue004/phaser-tips-header1.png" title="Phaser Coding Tips Weekly" style="margin-top: 8px" /></a>
+   // <a href="http://phaser.io"><img src="http://files.phaser.io.s3.amazonaws.com/codingtips/issue004/phaser-tips-header1.png" title="Phaser Coding Tips Weekly" style="margin-top: 8px" /></a>
 
 </body>
 </html>
