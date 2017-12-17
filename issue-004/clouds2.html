@@ -126,7 +126,8 @@
 
             //  Create a star inside of the 'stars' group
             // var star = this.stars.create(i * 70, 0, 'star');
-            var star = this.stars.create((i + Math.random()) * 70, 0, 'star');
+            // Added 64 to random x coordinate to prevent bunnies from landing on fox
+            var star = this.stars.create(((i + Math.random()) * 70) + 64, 0, 'star');
 
             // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
