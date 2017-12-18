@@ -143,7 +143,7 @@
 
             //  Create a star inside of the 'stars' group
             // var star = this.stars.create(i * 70, 0, 'star');
-            var star = this.stars.create((i + Math.random()) * 70) +64, 0, 'star');
+            var star = this.stars.create(((i + Math.random()) * 70) + 64, 0, 'star');
 
             // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
@@ -182,7 +182,7 @@
             this.camera.follow(this.player);
 
             // Display the score
-            this.scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000', });
+            this.scoreText = game.add.text(16, 40, 'Score: 0', { fontSize: '32px', fill: '#000', });
             this.scoreText.fixedToCamera = true;
 
             this.cursors = this.input.keyboard.createCursorKeys();
