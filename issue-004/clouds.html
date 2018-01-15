@@ -11,7 +11,11 @@
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(940, 480, Phaser.CANVAS, 'game');
+    //var game = new Phaser.Game(940, 480, Phaser.CANVAS, 'game');
+    game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'gameArea');
+
+    scaleRatio = window.devicePixelRatio / 3;
+    //myAsset.scale.setTo(scaleRatio, scaleRatio);
 
     var PhaserGame = function () {
 
@@ -41,7 +45,7 @@
 
             this.game.renderer.renderSession.roundPixels = true;
 
-            this.world.resize(640*3, 480);
+            this.world.resize(640*7, 480);
 
             this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -58,9 +62,8 @@
             this.load.crossOrigin = 'anonymous';
 
             this.load.image('trees', 'assets/forest.png');
-            this.load.image('background', 'assets/CloudySky.png');
+            this.load.image('background', 'assets/CloudySkyOfficial.png');
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
-            this.load.image('cloud-platform', 'assets/cloud-platform.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('hearts', 'assets/Hearts117x30.png');
@@ -68,10 +71,10 @@
 
         create: function () {
 
-            this.background = this.add.tileSprite(0, 0, 940, 480, 'background');
+            this.background = this.add.tileSprite(0, 0, 2000, 1000, 'background');
             this.background.fixedToCamera = true;
 
-            this.trees = this.add.tileSprite(0, 364, 940, 116, 'trees');
+            this.trees = this.add.tileSprite(0, 2000, 900, 1000, 'trees');
             this.trees.fixedToCamera = true;
 
 
