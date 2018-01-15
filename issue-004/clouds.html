@@ -347,6 +347,15 @@
 
     };
 
+        //Added scoring
+    function collectStar (player, star) {
+
+        // Removes the star from the screen
+        star.kill();
+        this.score += 10;
+        this.scoreText.text = 'Score: ' + this.score;
+    }
+
     game.state.add('Game', PhaserGame, true);
 
     </script>
