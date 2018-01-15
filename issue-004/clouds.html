@@ -180,7 +180,11 @@
             this.camera.follow(this.player);
             this.cursors = this.input.keyboard.createCursorKeys();
 
+                // Display the score
+            this.scoreText = game.add.text(16, 40, 'Score: 0', { fontSize: '32px', fill: '#000', });
+            this.scoreText.fixedToCamera = true;
 
+            this.cursors = this.input.keyboard.createCursorKeys();
 
              },
 
