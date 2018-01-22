@@ -37,6 +37,8 @@
         this.wasLocked = false;
         this.willJump = false;
 
+        this.score = 0;
+
     };
 
     PhaserGame.prototype = {
@@ -62,21 +64,46 @@
             // this.load.baseURL = 'http://files.phaser.io.s3.amazonaws.com/codingtips/issue004/';
             this.load.crossOrigin = 'anonymous';
 
-            this.load.image('trees', 'assets/forest.png');
+            this.load.image('trees', 'assets/forest.png', 384, 116);
             this.load.image('background', 'assets/CloudySkyOfficial.png');
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('hearts', 'assets/Hearts117x30.png');
+            this.load.image('hunter', 'assets/Howl Stillframe15x55.png')
         },
 
+
+        //  TileSprite{x, y, width, height, key string, frame string}
+
+//x	number
+//The x coordinate (in world space) to position the TileSprite at.
+
+//y	number
+//The y coordinate (in world space) to position the TileSprite at.
+
+//width	number=The width of the TileSprite.
+
+//height number=The height of the TileSprite.
+
+//key	string | Phaser.RenderTexture | Phaser.BitmapData | PIXI.Texture
+//This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Phaser Image Cache entry, or an instance of a RenderTexture, PIXI.Texture or BitmapData.
+
+//frame	string | number
+//If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+
+
         create: function () {
+
 
             this.background = this.add.tileSprite(0, 0, 2000, 1000, 'background');
             this.background.fixedToCamera = true;
 
-            this.trees = this.add.tileSprite(0, 2000, 900, 1000, 'trees');
+            this.trees = this.add.tileSprite(0, 1000-116-18, 2000, 116, 'trees');
             this.trees.fixedToCamera = true;
+
+            //this.trees.scale.x = 2;
+            //this.trees.scale.y = 2;
 
 
             //  Platforms that don't move
@@ -184,6 +211,10 @@
             this.camera.follow(this.player);
             this.cursors = this.input.keyboard.createCursorKeys();
 
+
+            //Adding the hunter
+         //   this.stationary.create (0, 0, 'hunter');
+
                 // Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
             this.scoreText.fixedToCamera = true;
@@ -282,6 +313,7 @@
 
         update: function () {
 
+            //Changes speed of backgrounds
             this.background.tilePosition.x = -(this.camera.x * 0.7);
             this.trees.tilePosition.x = -(this.camera.x * 0.9);
 
