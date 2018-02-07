@@ -163,6 +163,7 @@
 
             //  Here we'll create 30 of them randomly spaced apart
             for (var i = 0; i < 80; i++)
+
             {
 
                 //  Create a star inside of the 'stars' group
@@ -196,6 +197,37 @@
                 //  This just gives each star a slightly random bounce value
             star.body.bounce.y = 0.7 + Math.random() * 0.2;
 
+
+    //--------------------------------------------------------------------
+
+            //Initializing the Hunter
+            this.hunter = game.add.group();
+
+            //  We will enable physics for any hunter that is created in this group
+            this.hunter.enableBody = true;
+
+            //  Here we'll create 5 of them randomly spaced apart
+            for (var i = 0; i < 5; i++)
+
+            {
+
+            //Making separae hunter group
+            var hunter = this.hunter.create((i + Math.random()) * 35, 210, 'hunter');
+
+            //rnd function
+            hunter.anchor.setTo(0.5, 0.5);
+
+            //Huter size
+            hunter.body.setSize(15, 55, 10, 20);
+
+            //Gravity
+            hunter.body.gravity.y = 300;
+
+            //Hunter bounce
+            hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
+
+            }
+
             }
 
             //  The Player start position
@@ -209,11 +241,8 @@
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
             this.camera.follow(this.player);
-            this.cursors = this.input.keyboard.createCursorKeys();
+            this.cursors = this.input.keyboard.createCursorKeys()
 
-
-            //Adding the hunter
-         //   this.stationary.create (0, 0, 'hunter');
 
                 // Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
@@ -229,6 +258,7 @@
 
             //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
+
 
         },
 
