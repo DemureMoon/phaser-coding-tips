@@ -28,6 +28,7 @@
         this.stars = null;
         this.hearts = null;
         this.collectStar = null;
+        this.hunter = null;
 
         this.facing = 'left';
         this.jumpTimer = 0;
@@ -70,7 +71,7 @@
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('hearts', 'assets/Hearts117x30.png');
-            this.load.image('hunter', 'assets/Howl Stillframe15x55.png')
+            this.load.image('hunter', 'assets/Howl Stillframe15x55.png', 15, 55);
         },
 
 
@@ -196,7 +197,7 @@
 
                 //  This just gives each star a slightly random bounce value
             star.body.bounce.y = 0.7 + Math.random() * 0.2;
-
+            }
 
     //--------------------------------------------------------------------
 
@@ -207,18 +208,22 @@
             this.hunter.enableBody = true;
 
             //  Here we'll create 5 of them randomly spaced apart
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 50; i++)
 
             {
 
             //Making separae hunter group
-            var hunter = this.hunter.create((i + Math.random()) * 35, 210, 'hunter');
+            var hunter = this.hunter.create((i + Math.random()) * 55, 210, 'hunter');
 
             //rnd function
             hunter.anchor.setTo(0.5, 0.5);
 
             //Huter size
-            hunter.body.setSize(15, 55, 10, 20);
+            hunter.body.setSize(15, 55, 0, 0);
+
+             // Multiply values by scale so bunnies sit on ground. Needs some work.
+            // star.body.setSize(25, 25, 10, 20)
+            //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
             //Gravity
             hunter.body.gravity.y = 300;
@@ -226,9 +231,12 @@
             //Hunter bounce
             hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
 
-            }
+            this.physics.arcade.enable(this.hunter);
+
+            //this.hunter.body.collideWorldBounds = true;
 
             }
+
 
             //  The Player start position
             this.player = this.add.sprite(0, 300, 'dude');
@@ -244,7 +252,7 @@
             this.cursors = this.input.keyboard.createCursorKeys()
 
 
-                // Display the score
+            //  Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
             this.scoreText.fixedToCamera = true;
 
@@ -252,9 +260,13 @@
 
              },
 
+
+
         update: function () {
 
             this.physics.arcade.collide(this.stars, this.stationary);
+
+            //this.physics.arcade.collide(this.hunter, this.stationary);
 
             //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
@@ -356,6 +368,8 @@
             //  Collide the player and the stars with the platforms
 
             this.physics.arcade.collide(this.stars, this.stationary);
+
+            this.physics.arcade.collide(this.hunter, this.stationary);
 
              // Added collisions
             //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
