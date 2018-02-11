@@ -26,7 +26,8 @@
 
         this.stationary = null;
         this.stars = null;
-        this.hearts = null;
+        this.leftHeart = null;
+        this.rightHeart = null;
         this.collectStar = null;
 
         this.facing = 'left';
@@ -69,8 +70,9 @@
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
-            this.load.image('hearts', 'assets/Hearts117x30.png');
-            this.load.image('hunter', 'assets/Howl Stillframe15x55.png')
+            this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
+            this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png')
+            this.load.image('hunter', 'assets/Howl Stillframe15x55.png', 15, 55)
         },
 
 
@@ -147,12 +149,20 @@
 
 
             //Adding health bar
-            this.hearts = this.add.physicsGroup();
+            this.leftHeart = this.add.physicsGroup();
 
-            this.hearts.create(10, 60, 'hearts');
-            this.hearts.setAll('body.allowGravity', false);
-            this.hearts.setAll('body.immovable', true);
-            this.hearts.fixedToCamera = true;
+            this.leftHeart.create(10, 60, 'leftHeart');
+            this.leftHeart.setAll('body.allowGravity', false);
+            this.leftHeart.setAll('body.immovable', true);
+            this.leftHeart.fixedToCamera = true;
+
+            //This whoile section of righthearts seems to make the game not show up
+            //this.rightHearteart = this.add.physicsGroup();
+
+            //this.rightHeart.create(11, 60, 'rightHeart');
+            //this.rightHeart.setAll('body.allowGravity', false);
+            //this.rightHeart.setAll('body.immovable', true);
+            //this.rightHeart.fixedToCamera = true;
 
 
             //  Finally some stars to collect
