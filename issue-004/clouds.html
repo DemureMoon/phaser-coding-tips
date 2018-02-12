@@ -149,7 +149,7 @@
 
 
             //Adding health bar
-            this.leftHeart = this.add.physicsGroup();
+            this.leftHeart = this.add.physicsGroup();7
 
             this.leftHeart.create(10, 60, 'leftHeart');
             this.leftHeart.setAll('body.allowGravity', false);
@@ -157,12 +157,12 @@
             this.leftHeart.fixedToCamera = true;
 
             //This whoile section of righthearts seems to make the game not show up
-            //this.rightHearteart = this.add.physicsGroup();
+            this.rightHeart = this.add.physicsGroup();
 
-            //this.rightHeart.create(11, 60, 'rightHeart');
-            //this.rightHeart.setAll('body.allowGravity', false);
-            //this.rightHeart.setAll('body.immovable', true);
-            //this.rightHeart.fixedToCamera = true;
+            this.rightHeart.create(29, 60, 'rightHeart');
+            this.rightHeart.setAll('body.allowGravity', false);
+            this.rightHeart.setAll('body.immovable', true);
+            this.rightHeart.fixedToCamera = true;
 
 
             //  Finally some stars to collect
@@ -338,10 +338,17 @@
             this.physics.arcade.collide(this.stars, this.stationary);
 
              // Added collisions
+
+            //  Check for colision with hunter
+
+            //  set velocity to 0 again
+
             //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.stars, collectStar, null, this);
 
             this.player.body.velocity.x = 0;
+
+
 
             if (this.cursors.left.isDown)
             {
