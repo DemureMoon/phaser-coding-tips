@@ -259,11 +259,14 @@
 
             var hunter = this.hunter.create((i + Math.random()) * 55, 210, 'hunter');
 
-            // rnd function
+            hunter.scale.x = (.6 * this.direction);
             hunter.anchor.setTo(0.5, 0.5);
 
+            hunter.scale.x = (.6 * this.direction);
+            hunter.scale.y = .6;
+
             // Huter size
-            hunter.body.setSize(15, 55, 0, 0);
+            hunter.body.setSize(25, 55, 0, 0);
 
             //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
@@ -273,9 +276,6 @@
             // Hunter bounce
             hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
 
-            this.physics.arcade.enable(this.hunter);
-
-            // this.hunter.body.collideWorldBounds = true;
 
 
 //-----------------------------Adding Health---------------------------------
