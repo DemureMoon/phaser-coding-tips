@@ -25,7 +25,7 @@
         this.player = null;
 
         this.stationary = null;
-        this.stars = null;
+        this.bunnies = null;
         this.leftHeart = null;
         this.rightHeart = null;
         this.collectStar = null;
@@ -39,6 +39,7 @@
         this.willJump = false;
 
         this.score = 0;
+        this.health = 0;
 
     };
 
@@ -69,7 +70,7 @@
             this.load.image('background', 'assets/CloudySkyOfficial.png');
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
-            this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
+            this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
             this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png')
             this.load.image('hunter', 'assets/Howl Stillframe15x55.png', 15, 55)
@@ -165,20 +166,20 @@
             this.rightHeart.fixedToCamera = true;
 
 
-            //  Finally some stars to collect
-            this.stars = game.add.group();
+            // Finally some bunnies to collect
+            this.bunnies = game.add.group();
 
-            //  We will enable physics for any star that is created in this group
-            this.stars.enableBody = true;
+            //  We will enable physics for any bunny that is created in this group
+            this.bunnies.enableBody = true;
 
             //  Here we'll create 30 of them randomly spaced apart
             for (var i = 0; i < 80; i++)
             {
 
-                //  Create a star inside of the 'stars' group
-            // var star = this.stars.create(i * 70, 0, 'star');
-                                    //Can change y value to change bunny spawn height
-            var star = this.stars.create((i + Math.random()) * 35, 210, 'star');
+                //  Create a bunny inside of the 'bunnies' group
+            // var bunny = this.bunnies.create(i * 70, 0, 'bunny');
+            //  Can change y value to change bunny spawn height
+            var bunny = this.bunnies.create((i + Math.random()) * 35, 210, 'bunny');
 
                 // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
@@ -186,29 +187,29 @@
             this.direction = this.rnd.between(-1, 1);
 
                 // Look for rnd function without a range since 0 erases the bunny.
-            star.anchor.setTo(0.5, 0.5);
+            bunny.anchor.setTo(0.5, 0.5);
 
-                //star.scale.x = (.6 * this.rnd.integerInRange(-1, 1));
-            //star.scale.x = (.6 * this.rnd.between(-1, 1));
-            star.scale.x = (.6 * this.direction);
-            star.scale.y = .6;
+                //  bunny.scale.x = (.6 * this.rnd.integerInRange(-1, 1));
+            //  bunny.scale.x = (.6 * this.rnd.between(-1, 1));
+            bunny.scale.x = (.6 * this.direction);
+            bunny.scale.y = .6;
 
-            //So the bunnies don't spawn off the map...?
-            star.body.collideWorldBounds = true;
+            //  So the bunnies don't spawn off the map...?
+            bunny.body.collideWorldBounds = true;
 
                 // Multiply values by scale so bunnies sit on ground. Needs some work.
-            // star.body.setSize(25, 25, 10, 20)
-            star.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+            // bunny.body.setSize(25, 25, 10, 20)
+            bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
-                //  Let gravity do its thing
-            star.body.gravity.y = 300;
+                // Let gravity do its thing
+            bunny.body.gravity.y = 300;
 
-                //  This just gives each star a slightly random bounce value
-            star.body.bounce.y = 0.7 + Math.random() * 0.2;
+                // This just gives each bunny a slightly random bounce value
+            bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
 
             }
 
-            //  The Player start position
+            // The Player start position
             this.player = this.add.sprite(0, 300, 'dude');
             this.physics.arcade.enable(this.player);
 
@@ -222,8 +223,9 @@
             this.cursors = this.input.keyboard.createCursorKeys();
 
 
-            //Adding the hunter
-         //   this.stationary.create (0, 0, 'hunter');
+            //  Adding the hunter
+            // this.stationary.create (0, 0, 'hunter');
+//---------------------------------------------------------------------------
 
                 // Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
@@ -231,14 +233,18 @@
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
+            //  Display Health Points
+            this.healthText = game.add.text(23, 100, 'health: 0', { fontsize: '32px', fill: '#F00', });
+            this.healthText.fixedToCamera = true;
+
              },
 
         update: function () {
 
-            this.physics.arcade.collide(this.stars, this.stationary);
+            this.physics.arcade.collide(this.bunnies, this.stationary);
 
-            //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
+            //  Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
+            this.game.physics.arcade.overlap(this.player, this.bunnies, this.collectStar, null, this);
 
         },
 
@@ -333,9 +339,9 @@
             //  Do this AFTER the collide check, or we won't have blocked/touching set
             var standing = this.player.body.blocked.down || this.player.body.touching.down || this.locked;
 
-            //  Collide the player and the stars with the platforms
+            //  Collide the player and the bunnies with the platforms
 
-            this.physics.arcade.collide(this.stars, this.stationary);
+            this.physics.arcade.collide(this.bunnies, this.stationary);
 
              // Added collisions
 
@@ -343,8 +349,8 @@
 
             //  set velocity to 0 again
 
-            //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.stars, collectStar, null, this);
+            //  Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
+            this.game.physics.arcade.overlap(this.player, this.bunnies, collectStar, null, this);
 
             this.player.body.velocity.x = 0;
 
@@ -410,10 +416,10 @@
     };
 
         //Added scoring
-    function collectStar (player, star) {
+    function collectStar (player, bunny) {
 
-        // Removes the star from the screen
-        star.kill();
+        // Removes the bunny from the screen
+        bunny.kill();
         this.score += 10;
         this.scoreText.text = 'Score: ' + this.score;
     }
