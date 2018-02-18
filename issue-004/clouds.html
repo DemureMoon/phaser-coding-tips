@@ -11,11 +11,11 @@
 
     <script type="text/javascript">
 
-    // var game = new Phaser.Game(940, 480, Phaser.CANVAS, 'game');
-    game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'gameArea');
+    var game = new Phaser.Game(980, 1100, Phaser.CANVAS, 'game');
+    //game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'gameArea');
 
-    scaleRatio = window.devicePixelRatio / 3;
-    // myAsset.scale.setTo(scaleRatio, scaleRatio);
+    //scaleRatio = window.devicePixelRatio / 3;
+    myAsset.scale.setTo(scaleRatio, scaleRatio);
 
     var PhaserGame = function () {
 
@@ -171,18 +171,17 @@
             // We will enable physics for any bunny that is created in this group
             this.bunnies.enableBody = true;
 
-            // Here we'll create 30 of them randomly spaced apart
-            for (var i = 0; i < 80; i++)
+            // Here we'll create them randomly spaced apart
+            for (var i = 3; i < 60; i++)
             {
 
             // Create a bunny inside of the 'bunnies' group
             // var bunny = this.bunnies.create(i * 70, 0, 'bunny');
             // Can change y value to change bunny spawn height
-            var bunny = this.bunnies.create((i + Math.random()) * 35, 210, 'bunny');
+            var bunny = this.bunnies.create((i + Math.random()) * 80, 210, 'bunny');
 
             // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
-            // Try using a variable:
             this.direction = this.rnd.between(-1, 1);
 
             // Look for rnd function without a range since 0 erases the bunny.
@@ -224,7 +223,6 @@
 
             // Adding the hunter
             // this.stationary.create (0, 0, 'hunter');
-//---------------------------------------------------------------------------
 
             // Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
@@ -232,8 +230,11 @@
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
+//-----------------------------Adding Health---------------------------------
+
+
             // Display Health Points
-            this.healthText = game.add.text(13, 70, 'health: 0', { fontsize: '32px', fill: '#F00', });
+            this.healthText = game.add.text(13, 70, 'Health: 0', { fontsize: '32px', fill: '#F00', });
             this.healthText.fixedToCamera = true;
 
              },
@@ -421,6 +422,10 @@
             bunny.kill();
             this.score += 10;
             this.scoreText.text = 'Score: ' + this.score;
+
+            bunny.kill();
+            this.health += 1;
+            this.healthText.text = 'Health: ' + this.health;
     }
 
     game.state.add('Game', PhaserGame, true);
