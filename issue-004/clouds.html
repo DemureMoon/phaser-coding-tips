@@ -266,8 +266,6 @@
 
             this.physics.arcade.collide(this.stars, this.stationary);
 
-            //this.physics.arcade.collide(this.hunter, this.stationary);
-
             //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
 
