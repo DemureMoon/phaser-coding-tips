@@ -178,7 +178,7 @@
             // Create a bunny inside of the 'bunnies' group
             // var bunny = this.bunnies.create(i * 70, 0, 'bunny');
             // Can change y value to change bunny spawn height
-            var bunny = this.bunnies.create((i + Math.random()) * 80, 210, 'bunny');
+            var bunny = this.bunnies.create((i + Math.random()) * 90, 110, 'bunny');
 
             // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
@@ -203,6 +203,19 @@
             bunny.body.gravity.y = 300;
 
             // This just gives each bunny a slightly random bounce value
+            bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
+
+            //-------------------Second Bunny Group--------------------------
+
+            var bunny = this.bunnies.create((i + Math.random()) * 90, 350, 'bunny');
+
+            this.direction = this.rnd.between(-1, 1);
+            bunny.anchor.setTo(0.5, 0.5);
+            bunny.scale.x = (.6 * this.direction);
+            bunny.scale.y = .6;
+            bunny.body.collideWorldBounds = true;
+            bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+            bunny.body.gravity.y = 300;
             bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
 
             }
