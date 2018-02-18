@@ -11,7 +11,7 @@
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(1920, 979, Phaser.CANVAS, 'game');
+    var game = new Phaser.Game(1905, 995, Phaser.CANVAS, 'game');
     //game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'gameArea');
 
     //scaleRatio = window.devicePixelRatio / 3;
@@ -25,10 +25,11 @@
         this.player = null;
 
         this.stationary = null;
-        this.stars = null;
-        this.hearts = null;
-        this.collectStar = null;
+        this.bunnies = null;
+        this.leftHeart = null;
+        this.rightHeart = null;
         this.hunter = null;
+        this.collectStar = null;
 
         this.facing = 'left';
         this.jumpTimer = 0;
@@ -39,6 +40,7 @@
         this.willJump = false;
 
         this.score = 0;
+        this.health = 0;
 
     };
 
@@ -48,20 +50,20 @@
 
             this.game.renderer.renderSession.roundPixels = true;
 
-            //If y is multiplied by 2 it will change the height of the world and bunny spawn
+            // If y is multiplied by 2 it will change the height of the world and bunny spawn
             this.world.resize(640*7, 480);
 
             this.physics.startSystem(Phaser.Physics.ARCADE);
 
-            //player gravity
+            // Player gravity
             this.physics.arcade.gravity.y = 430;
 
         },
 
         preload: function () {
 
-            //  We need this because the assets are on Amazon S3
-            //  Remove the next 2 lines if running locally
+            // We need this because the assets are on Amazon S3
+            // Remove the next 2 lines if running locally
             // this.load.baseURL = 'http://files.phaser.io.s3.amazonaws.com/codingtips/issue004/';
             this.load.crossOrigin = 'anonymous';
 
@@ -69,29 +71,30 @@
             this.load.image('background', 'assets/CloudySkyOfficial.png');
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
             this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
-            this.load.spritesheet('star', 'assets/Bunny45x45.png', 45, 45);
-            this.load.image('hearts', 'assets/Hearts117x30.png');
-            this.load.image('hunter', 'assets/Howl Stillframe15x55.png', 15, 55);
+            this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
+            this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
+            this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png')
+            this.load.image('hunter', 'assets/Howl Stillframe15x55.png', 15, 55)
         },
 
 
-        //  TileSprite{x, y, width, height, key string, frame string}
+//---------TileSprite{x, y, width, height, key string, frame string}---------
 
-//x	number
-//The x coordinate (in world space) to position the TileSprite at.
+// x	number
+// The x coordinate (in world space) to position the TileSprite at.
 
-//y	number
-//The y coordinate (in world space) to position the TileSprite at.
+// y	number
+// The y coordinate (in world space) to position the TileSprite at.
 
-//width	number=The width of the TileSprite.
+// width	number=The width of the TileSprite.
 
-//height number=The height of the TileSprite.
+// height number=The height of the TileSprite.
 
-//key	string | Phaser.RenderTexture | Phaser.BitmapData | PIXI.Texture
-//This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Phaser Image Cache entry, or an instance of a RenderTexture, PIXI.Texture or BitmapData.
+// key	string | Phaser.RenderTexture | Phaser.BitmapData | PIXI.Texture
+// This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Phaser Image Cache entry, or an instance of a RenderTexture, PIXI.Texture or BitmapData.
 
-//frame	string | number
-//If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+// frame	string | number
+// If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 
 
         create: function () {
@@ -103,14 +106,14 @@
             this.trees = this.add.tileSprite(0, 1000-116-18, 2000, 116, 'trees');
             this.trees.fixedToCamera = true;
 
-            //this.trees.scale.x = 2;
-            //this.trees.scale.y = 2;
+            // this.trees.scale.x = 2;
+            // this.trees.scale.y = 2;
 
 
-            //  Platforms that don't move
+            // Platforms that don't move
             this.stationary = this.add.physicsGroup();
 
-            //PLatforms
+            // PLatforms
             this.stationary.create(170, 360, 'platform');
             this.stationary.create(400, 290, 'platform');
             this.stationary.create(650, 230, 'platform');
@@ -126,7 +129,7 @@
             this.stationary.create(1602, 290, 'platform');
 
 
-            //Ground
+            // Ground
             this.stationary.create(0, 450, 'platform');
             this.stationary.create(134, 450, 'platform');
             this.stationary.create(268, 450, 'platform');
@@ -147,98 +150,78 @@
             this.stationary.setAll('body.immovable', true);
 
 
-            //Adding health bar
-            this.hearts = this.add.physicsGroup();
+            //-----------------Adding health bar-----------------------------
+            // this.leftHeart = this.add.physicsGroup();7
 
-            this.hearts.create(10, 60, 'hearts');
-            this.hearts.setAll('body.allowGravity', false);
-            this.hearts.setAll('body.immovable', true);
-            this.hearts.fixedToCamera = true;
+            // this.leftHeart.create(10, 60, 'leftHeart');
+            // this.leftHeart.setAll('body.allowGravity', false);
+            // this.leftHeart.setAll('body.immovable', true);
+            // this.leftHeart.fixedToCamera = true;
+
+            // this.rightHeart = this.add.physicsGroup();
+
+            // this.rightHeart.create(29, 60, 'rightHeart');
+            // this.rightHeart.setAll('body.allowGravity', false);
+            // this.rightHeart.setAll('body.immovable', true);
+            // this.rightHeart.fixedToCamera = true;
 
 
-            //  Finally some stars to collect
-            this.stars = game.add.group();
+            // Finally some bunnies to collect
+            this.bunnies = game.add.group();
 
-            //  We will enable physics for any star that is created in this group
-            this.stars.enableBody = true;
+            // We will enable physics for any bunny that is created in this group
+            this.bunnies.enableBody = true;
 
-            //  Here we'll create 30 of them randomly spaced apart
-            for (var i = 0; i < 80; i++)
-
+            // Here we'll create them randomly spaced apart
+            for (var i = 3; i < 60; i++)
             {
 
-                //  Create a star inside of the 'stars' group
-            // var star = this.stars.create(i * 70, 0, 'star');
-                                    //Can change y value to change bunny spawn height
-            var star = this.stars.create((i + Math.random()) * 35, 210, 'star');
+            // Create a bunny inside of the 'bunnies' group
+            // var bunny = this.bunnies.create(i * 70, 0, 'bunny');
+            // Can change y value to change bunny spawn height
+            var bunny = this.bunnies.create((i + Math.random()) * 90, 110, 'bunny');
 
-                // Use anchor to allow bunny to be flipped on its centerlines
+            // Use anchor to allow bunny to be flipped on its centerlines
             // Use scale to reduce bunny size and allow image to flip using negative values
-            // Try using a variable:
             this.direction = this.rnd.between(-1, 1);
 
-                // Look for rnd function without a range since 0 erases the bunny.
-            star.anchor.setTo(0.5, 0.5);
+            // Look for rnd function without a range since 0 erases the bunny.
+            bunny.anchor.setTo(0.5, 0.5);
 
-                //star.scale.x = (.6 * this.rnd.integerInRange(-1, 1));
-            //star.scale.x = (.6 * this.rnd.between(-1, 1));
-            star.scale.x = (.6 * this.direction);
-            star.scale.y = .6;
+            // bunny.scale.x = (.6 * this.rnd.integerInRange(-1, 1));
+            // bunny.scale.x = (.6 * this.rnd.between(-1, 1));
+            bunny.scale.x = (.6 * this.direction);
+            bunny.scale.y = .6;
 
-            //So the bunnies don't spawn off the map...?
-            star.body.collideWorldBounds = true;
+            // So the bunnies don't spawn off the map...?
+            bunny.body.collideWorldBounds = true;
 
-                // Multiply values by scale so bunnies sit on ground. Needs some work.
-            // star.body.setSize(25, 25, 10, 20)
-            star.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+            // Multiply values by scale so bunnies sit on ground. Needs some work.
+            // bunny.body.setSize(25, 25, 10, 20)
+            bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
-                //  Let gravity do its thing
-            star.body.gravity.y = 300;
+            // Let gravity do its thing
+            bunny.body.gravity.y = 300;
 
-                //  This just gives each star a slightly random bounce value
-            star.body.bounce.y = 0.7 + Math.random() * 0.2;
-            }
+            // This just gives each bunny a slightly random bounce value
+            bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
 
-    //--------------------------------------------------------------------
+            //-------------------Second Bunny Group--------------------------
 
-            //Initializing the Hunter
-            this.hunter = game.add.group();
+            var bunny = this.bunnies.create((i + Math.random()) * 90, 350, 'bunny');
 
-            //  We will enable physics for any hunter that is created in this group
-            this.hunter.enableBody = true;
-
-            //  Here we'll create 5 of them randomly spaced apart
-            for (var i = 0; i < 50; i++)
-
-            {
-
-            //Making separae hunter group
-            var hunter = this.hunter.create((i + Math.random()) * 55, 210, 'hunter');
-
-            //rnd function
-            hunter.anchor.setTo(0.5, 0.5);
-
-            //Huter size
-            hunter.body.setSize(15, 55, 0, 0);
-
-             // Multiply values by scale so bunnies sit on ground. Needs some work.
-            // star.body.setSize(25, 25, 10, 20)
-            //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
-
-            //Gravity
-            hunter.body.gravity.y = 300;
-
-            //Hunter bounce
-            hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
-
-            this.physics.arcade.enable(this.hunter);
-
-            //this.hunter.body.collideWorldBounds = true;
+            this.direction = this.rnd.between(-1, 1);
+            bunny.anchor.setTo(0.5, 0.5);
+            bunny.scale.x = (.6 * this.direction);
+            bunny.scale.y = .6;
+            bunny.body.collideWorldBounds = true;
+            bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+            bunny.body.gravity.y = 300;
+            bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
 
             }
 
-
-            //  The Player start position
+            // The Player start position
             this.player = this.add.sprite(0, 300, 'dude');
             this.physics.arcade.enable(this.player);
 
@@ -249,26 +232,67 @@
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
             this.camera.follow(this.player);
-            this.cursors = this.input.keyboard.createCursorKeys()
+            this.cursors = this.input.keyboard.createCursorKeys();
 
 
-            //  Display the score
+            // Adding the hunter
+            // this.stationary.create (0, 0, 'hunter');
+
+            // Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
             this.scoreText.fixedToCamera = true;
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
+//-----------------------------Adding Hunters--------------------------------
+
+            // Initializing the Hunter
+            this.hunter = game.add.group();
+
+            // We will enable physics for any hunter that is created in this group
+            this.hunter.enableBody = true;
+
+            //  Create them randomly spaced apart
+            for (var i = 0; i < 50; i++)
+
+            {
+
+            var hunter = this.hunter.create((i + Math.random()) * 55, 210, 'hunter');
+
+            hunter.scale.x = (.6 * this.direction);
+            hunter.anchor.setTo(0.5, 0.5);
+
+            hunter.scale.x = (.6 * this.direction);
+            hunter.scale.y = .6;
+
+            // Huter size
+            hunter.body.setSize(15, 55, 0, 0);
+
+            //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+
+            // Gravity
+            hunter.body.gravity.y = 300;
+
+            // Hunter bounce
+            hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
+
+
+
+//-----------------------------Adding Health---------------------------------
+
+
+            // Display Health Points
+            this.healthText = game.add.text(13, 70, 'Health: 0', { fontsize: '32px', fill: '#F00', });
+            this.healthText.fixedToCamera = true;
+
              },
-
-
 
         update: function () {
 
-            this.physics.arcade.collide(this.stars, this.stationary);
+            this.physics.arcade.collide(this.bunnies, this.stationary);
 
-            //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.stars, this.collectStar, null, this);
-
+            // Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
+            this.game.physics.arcade.overlap(this.player, this.bunnies, this.collectStar, null, this);
 
         },
 
@@ -291,7 +315,7 @@
 
             this.player.body.velocity.y = 0;
 
-            //  If the player has walked off either side of the platform then they're no longer locked to it
+            // If the player has walked off either side of the platform then they're no longer locked to it
             if (this.player.body.right < this.lockedTo.body.x || this.player.body.x > this.lockedTo.body.right)
             {
                 this.cancelLock();
@@ -310,7 +334,7 @@
 
             if (this.game.paused)
             {
-                //  Because preRender still runs even if your game pauses!
+                // Because preRender still runs even if your game pauses!
                 return;
             }
 
@@ -331,7 +355,7 @@
 
                 if (this.lockedTo && this.lockedTo.deltaY < 0 && this.wasLocked)
                 {
-                    //  If the platform is moving up we add its velocity to the players jump
+                    // If the platform is moving up we add its velocity to the players jump
                     this.player.body.velocity.y = -300 + (this.lockedTo.deltaY * 10);
                 }
                 else
@@ -353,27 +377,35 @@
 
         update: function () {
 
-            //Changes speed of backgrounds
+            // Changes speed of backgrounds
             this.background.tilePosition.x = -(this.camera.x * 0.7);
             this.trees.tilePosition.x = -(this.camera.x * 0.9);
 
             this.physics.arcade.collide(this.player, this.stationary);
 
 
-            //  Do this AFTER the collide check, or we won't have blocked/touching set
+            // Do this AFTER the collide check, or we won't have blocked/touching set
             var standing = this.player.body.blocked.down || this.player.body.touching.down || this.locked;
 
-            //  Collide the player and the stars with the platforms
+            // Collide the player and the bunnies with the platforms
 
-            this.physics.arcade.collide(this.stars, this.stationary);
+            this.physics.arcade.collide(this.bunnies, this.stationary);
 
-            this.physics.arcade.collide(this.hunter, this.stationary);
+            this.physics.arcade.collide)this.hunter, this.stationary);
 
-             // Added collisions
-            //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.stars, collectStar, null, this);
+
+            //-----Add collisions
+
+            //-----Check for colision with hunter
+
+            //-----Set velocity to 0 again
+
+            // Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
+            this.game.physics.arcade.overlap(this.player, this.bunnies, collectStar, null, this);
 
             this.player.body.velocity.x = 0;
+
+
 
             if (this.cursors.left.isDown)
             {
@@ -434,13 +466,17 @@
 
     };
 
-        //Added scoring
-    function collectStar (player, star) {
+            // Added scoring
+            function collectStar (player, bunny) {
 
-        // Removes the star from the screen
-        star.kill();
-        this.score += 10;
-        this.scoreText.text = 'Score: ' + this.score;
+            // Removes the bunny from the screen
+            bunny.kill();
+            this.score += 10;
+            this.scoreText.text = 'Score: ' + this.score;
+
+            bunny.kill();
+            this.health += 1;
+            this.healthText.text = 'Health: ' + this.health;
     }
 
     game.state.add('Game', PhaserGame, true);
