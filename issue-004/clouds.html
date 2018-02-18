@@ -28,6 +28,7 @@
         this.bunnies = null;
         this.leftHeart = null;
         this.rightHeart = null;
+        this.hunter = null;
         this.collectStar = null;
 
         this.facing = 'left';
@@ -243,6 +244,40 @@
 
             this.cursors = this.input.keyboard.createCursorKeys();
 
+//-----------------------------Adding Hunters--------------------------------
+
+            // Initializing the Hunter
+            this.hunter = game.add.group();
+
+            // We will enable physics for any hunter that is created in this group
+            this.hunter.enableBody = true;
+
+            //  Create them randomly spaced apart
+            for (var i = 0; i < 50; i++)
+
+            {
+
+            var hunter = this.hunter.create((i + Math.random()) * 55, 210, 'hunter');
+
+            // rnd function
+            hunter.anchor.setTo(0.5, 0.5);
+
+            // Huter size
+            hunter.body.setSize(15, 55, 0, 0);
+
+            //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+
+            // Gravity
+            hunter.body.gravity.y = 300;
+
+            // Hunter bounce
+            hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
+
+            this.physics.arcade.enable(this.hunter);
+
+            // this.hunter.body.collideWorldBounds = true;
+
+
 //-----------------------------Adding Health---------------------------------
 
 
@@ -355,6 +390,9 @@
             // Collide the player and the bunnies with the platforms
 
             this.physics.arcade.collide(this.bunnies, this.stationary);
+
+            this.physics.arcade.collide)this.hunter, this.stationary);
+
 
             //-----Add collisions
 
