@@ -235,9 +235,6 @@
             this.cursors = this.input.keyboard.createCursorKeys();
 
 
-            // Adding the hunter
-            // this.stationary.create (0, 0, 'hunter');
-
             // Display the score
             this.scoreText = game.add.text(13, 100, 'Score: 0', { fontSize: '32px', fill: '#000', });
             this.scoreText.fixedToCamera = true;
@@ -266,7 +263,7 @@
             hunter.scale.y = .6;
 
             // Huter size
-            hunter.body.setSize(15, 55, 0, 0);
+            hunter.body.setSize(25, 55, 0, 0);
 
             //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
