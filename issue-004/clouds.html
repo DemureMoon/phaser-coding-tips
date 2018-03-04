@@ -460,8 +460,10 @@
 
         }
 
+                                };
 
-    };
+
+
 
             // Added scoring
             function collectStar (player, bunny) {
@@ -474,7 +476,8 @@
             bunny.kill();
             this.health += 1;
             this.healthText.text = 'Health: ' + this.health;
-    }
+
+            }
 
     game.state.add('Game', PhaserGame, true);
 
