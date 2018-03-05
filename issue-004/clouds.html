@@ -70,7 +70,7 @@
             this.load.image('trees', 'assets/forest.png', 384, 116);
             this.load.image('background', 'assets/CloudySkyOfficial.png');
             this.load.image('platform', 'assets/OfficialPlatform134x32.png');
-            this.load.spritesheet('dude', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
+            this.load.spritesheet('flynn', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
             this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png');
@@ -221,7 +221,7 @@
             }
 
             // The Player start position
-            this.player = this.add.sprite(0, 300, 'dude');
+            this.player = this.add.sprite(0, 300, 'flynn');
             this.physics.arcade.enable(this.player);
 
             this.player.body.collideWorldBounds = true;
