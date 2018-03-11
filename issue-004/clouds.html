@@ -69,7 +69,7 @@
 
             this.load.image('trees', 'assets/forest.png', 384, 116);
             this.load.image('background', 'assets/CloudySkyOfficial.png');
-            this.load.image('platform', 'assets/OfficialPlatform134x32.png');
+            this.load.image('platform', 'assets/OfficialPlatform134x32.png', 134, 32);
             this.load.spritesheet('flynn', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
@@ -225,7 +225,8 @@
             this.physics.arcade.enable(this.player);
 
             this.player.body.collideWorldBounds = true;
-            this.player.body.setSize(90, 52, 0, 0);
+            //(90, 52, 0, 0)
+            this.player.body.setSize(10, 52, 0, 0);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
