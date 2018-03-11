@@ -56,7 +56,7 @@
             this.physics.startSystem(Phaser.Physics.ARCADE);
 
             // Player gravity
-            this.physics.arcade.gravity.y = 430;
+            this.physics.arcade.gravity.y = 330;
 
         },
 
@@ -74,27 +74,27 @@
             this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
             this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png');
-            this.load.image('hunter', 'assets/Howl Stillframe15x55.png', 15, 55);
+            this.load.image('hunter', 'assets/Hunter Stillframe35x128.png', 35, 128);
         },
 
 
-//---------TileSprite{x, y, width, height, key string, frame string}---------
+            //---------TileSprite{x, y, width, height, key string, frame string}---------
 
-// x	number
-// The x coordinate (in world space) to position the TileSprite at.
+            // x	number
+            // The x coordinate (in world space) to position the TileSprite at.
 
-// y	number
-// The y coordinate (in world space) to position the TileSprite at.
+            // y	number
+            // The y coordinate (in world space) to position the TileSprite at.
 
-// width	number=The width of the TileSprite.
+            // width	number=The width of the TileSprite.
 
-// height number=The height of the TileSprite.
+            // height number=The height of the TileSprite.
 
-// key	string | Phaser.RenderTexture | Phaser.BitmapData | PIXI.Texture
-// This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Phaser Image Cache entry, or an instance of a RenderTexture, PIXI.Texture or BitmapData.
+            // key	string | Phaser.RenderTexture | Phaser.BitmapData | PIXI.Texture
+            // This is the image or texture used by the TileSprite during rendering. It can be a string which is a reference to the Phaser Image Cache entry, or an instance of a RenderTexture, PIXI.Texture or BitmapData.
 
-// frame	string | number
-// If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+            // frame	string | number
+            // If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 
 
         create: function () {
@@ -206,7 +206,7 @@
                 // This just gives each bunny a slightly random bounce value
                 bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
 
-                //-------------------Second Bunny Group--------------------------
+//-------------------Second Bunny Group--------------------------
 
                 var bunny = this.bunnies.create((i + Math.random()) * 90, 350, 'bunny');
 
@@ -225,7 +225,7 @@
             this.physics.arcade.enable(this.player);
 
             this.player.body.collideWorldBounds = true;
-            this.player.body.setSize(90, 52, 0, -3);
+            this.player.body.setSize(90, 52, 0, 0);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
@@ -249,9 +249,9 @@
             this.hunter.enableBody = true;
 
             //  Create them randomly spaced apart
-            for (var i = 0; i < 50; i++)
+            for (var i = 1; i < 10; i++)
             {
-                var hunter = this.hunter.create((i + Math.random()) * 55, 210, 'hunter');
+                var hunter = this.hunter.create((i + Math.random()) * 290, 210, 'hunter');
 
                 hunter.scale.x = (.6 * this.direction);
                 hunter.anchor.setTo(0.5, 0.5);
@@ -259,8 +259,10 @@
                 hunter.scale.x = (.6 * this.direction);
                 hunter.scale.y = .6;
 
-                // Huter size
-                hunter.body.setSize(25, 55, 0, 0);
+                hunter.body.collideWorldBounds = true;
+
+                // Huter size (I made the x value 15 so it might be easier not to hit the hunter if Flynn gets too close)
+                hunter.body.setSize(15, 128, 0, 0);
 
                 //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
@@ -272,18 +274,16 @@
 
             }
 
-            //-----------------------------Adding Health---------------------------------
+//-----------------------------Adding Health---------------------------------
 
 
             // Display Health Points
             this.healthText = game.add.text(13, 70, 'Health: 0', { fontsize: '32px', fill: '#F00', });
             this.healthText.fixedToCamera = true;
 
-        },
-
-        update: function () {
-
-            this.physics.arcade.collide(this.bunnies, this.stationary);
+            // This doesn't seem to belong here. Probably copied by mistake
+            // this.physics.arcade.collide(this.bunnies, this.stationary);
+            //
 
             // Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.bunnies, this.collectStar, null, this);
@@ -388,17 +388,15 @@
             this.physics.arcade.collide(this.hunter, this.stationary);
 
 
-            //-----Add collisions
-
-            //-----Check for colision with hunter
-
-            //-----Set velocity to 0 again
-
             // Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
             this.game.physics.arcade.overlap(this.player, this.bunnies, collectStar, null, this);
 
             this.player.body.velocity.x = 0;
 
+            //checks to see if player collides with hunters
+            this.game.physics.arcade.overlap(this.player, this.hunter, losehealth, null, this);
+
+            this.player.body.velocity.x = 0;
 
 
             if (this.cursors.left.isDown)
@@ -471,6 +469,13 @@
     this.health += 1;
     this.healthText.text = 'Health: ' + this.health;
 
+    }
+
+    //Losing health
+    function losehealth (player, hunter) {
+        hunter.kill();
+        this.health -= 2;
+        this.healthText.text = 'Health:' + this.health;
     }
 
     game.state.add('Game', PhaserGame, true);
