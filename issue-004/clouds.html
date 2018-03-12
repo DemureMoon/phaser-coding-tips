@@ -29,7 +29,7 @@
         this.leftHeart = null;
         this.rightHeart = null;
         this.hunter = null;
-        this.collectStar = null;
+        this.collectBunny = null;
 
         this.facing = 'left';
         this.jumpTimer = 0;
@@ -226,7 +226,7 @@
 
             this.player.body.collideWorldBounds = true;
             //(90, 52, 0, 0)
-            this.player.body.setSize(10, 52, 0, 0);
+            this.player.body.setSize(90, 52, 0, 0);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
@@ -262,8 +262,8 @@
 
                 hunter.body.collideWorldBounds = true;
 
-                // Huter size (I made the x value 15 so it might be easier not to hit the hunter if Flynn gets too close)
-                hunter.body.setSize(15, 128, 0, 0);
+                // Huter size (might make x value smaller so it's possibly easier not to hit the hunter if Flynn gets too close)
+                hunter.body.setSize(35, 128, 0, 0);
 
                 //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
@@ -286,8 +286,8 @@
             // this.physics.arcade.collide(this.bunnies, this.stationary);
             //
 
-            // Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.bunnies, this.collectStar, null, this);
+            // Checks to see if the player overlaps with any of the bunnies, if he does call the collectBunny function
+            this.game.physics.arcade.overlap(this.player, this.bunnies, this.collectBunny, null, this);
 
         },
 
@@ -389,16 +389,15 @@
             this.physics.arcade.collide(this.hunter, this.stationary);
 
 
-            // Checks to see if the player overlaps with any of the bunnies, if he does call the collectStar function
-            this.game.physics.arcade.overlap(this.player, this.bunnies, collectStar, null, this);
+            // Checks to see if the player overlaps with any of the bunnies, if he does call the collectBunny function
+            this.game.physics.arcade.overlap(this.player, this.bunnies, collectBunny, null, this);
 
             this.player.body.velocity.x = 0;
 
             //checks to see if player collides with hunters
-            this.game.physics.arcade.overlap(this.player, this.hunter, losehealth, null, this);
+            this.game.physics.arcade.overlap(this.player, this.hunter, loseHealth, null, this);
 
             this.player.body.velocity.x = 0;
-
 
             if (this.cursors.left.isDown)
             {
@@ -456,28 +455,46 @@
 
         },
 
+
     };
 
     // Added scoring
-    function collectStar (player, bunny) {
+    function collectBunny (player, bunny) {
 
     // Removes the bunny from the screen
     bunny.kill();
     this.score += 10;
     this.scoreText.text = 'Score: ' + this.score;
-
-    bunny.kill();
     this.health += 1;
     this.healthText.text = 'Health: ' + this.health;
 
     }
 
     //Losing health
-    function losehealth (player, hunter) {
+    function loseHealth (player, hunter) {
         hunter.kill();
         this.health -= 2;
         this.healthText.text = 'Health:' + this.health;
+
+        if (player.body.velocity.y > 0)
+        {
+            hunter.kill();
+            this.health +=2;
+            this.healthText.text = 'Health:' + this.health;
+        }
+
+        if (this.health < 0)
+        {
+            gameOver();
+        }
+
     }
+
+    function gameOver () {
+
+        game.state.start('Game');
+    }
+
 
     game.state.add('Game', PhaserGame, true);
 
