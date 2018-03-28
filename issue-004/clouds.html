@@ -21,6 +21,7 @@
 
         this.bg = null;
         this.trees = null;
+        this.killScreen
 
         this.player = null;
 
@@ -75,6 +76,7 @@
             this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
             this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png');
             this.load.image('hunter', 'assets/Hunter Stillframe35x128.png', 35, 128);
+            this.load.image('killScreen', 'assets/killScreen1905x995.png', 1905, 995);
         },
 
 
@@ -491,8 +493,8 @@
     }
 
     function gameOver () {
-
         game.state.start('Game');
+        //this.background = this.add.tileSprite(0, 0, 1905, 995, 'killScreen');
     }
 
 
