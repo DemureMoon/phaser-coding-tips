@@ -475,13 +475,13 @@
     //Losing health
     function loseHealth (player, hunter) {
         hunter.kill();
-        this.health -= 2;
+        this.health -= 5;
         this.healthText.text = 'Health:' + this.health;
 
         if (player.body.velocity.y > 0)
         {
             hunter.kill();
-            this.health +=2;
+            this.health +=1;
             this.healthText.text = 'Health:' + this.health;
         }
 
