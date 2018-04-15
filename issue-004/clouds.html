@@ -258,8 +258,6 @@
 
                 hunter.scale.x = (.6 * this.direction);
                 hunter.anchor.setTo(0.5, 0.5);
-
-                hunter.scale.x = (.6 * this.direction);
                 hunter.scale.y = .6;
 
                 hunter.body.collideWorldBounds = true;
@@ -474,14 +472,20 @@
 
     //Losing health
     function loseHealth (player, hunter) {
-        hunter.kill();
-        this.health -= 5;
-        this.healthText.text = 'Health:' + this.health;
+        //hunter.kill();
+        //this.health -= 5;
+        //this.healthText.text = 'Health:' + this.health;
 
         if (player.body.velocity.y > 0)
         {
             hunter.kill();
             this.health +=1;
+            this.healthText.text = 'Health:' + this.health;
+        }
+        else
+        {
+            hunter.kill();
+            this.health -= 5;
             this.healthText.text = 'Health:' + this.health;
         }
 
