@@ -250,34 +250,37 @@
 //-----------------------------Adding Hunters--------------------------------
 
             // Initializing the Hunter
-            this.hunter = game.add.group();
+            // this.hunter = game.add.group();
+            this.hunter = this.add.sprite(Math.random() * 1000, Math.random() * 1000, 'hunter');
 
             // We will enable physics for any hunter that is created in this group
-            this.hunter.enableBody = true;
+            //this.hunter.enableBody = true;
+            this.physics.arcade.enable(this.hunter);
+
 
             //  Create them randomly spaced apart
-            for (var i = 1; i <=10; i++)
-            {
-                var hunter = this.hunter.create((i + Math.random()) * 290, 210, 'hunter');
+            //for (var i = 1; i <=10; i++)
+            //{
+              //  var hunter = this.hunter.create((i + Math.random()) * 290, 210, 'hunter');
 
-                hunter.scale.x = (.6 * this.direction);
-                hunter.anchor.setTo(0.5, 0.5);
-                hunter.scale.y = .6;
+                this.hunter.scale.x = (.6 * this.direction);
+                this.hunter.anchor.setTo(0.5, 0.5);
+                this.hunter.scale.y = .6;
 
-                hunter.body.collideWorldBounds = true;
+                this.hunter.body.collideWorldBounds = true;
 
                 // Huter size (might make x value smaller so it's possibly easier not to hit the hunter if Flynn gets too close)
-                hunter.body.setSize(35, 128, 0, 0);
+                //hunter.body.setSize(35, 128, 0, 0);
 
-                //hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+                this.hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
 
                 // Gravity
-                hunter.body.gravity.y = 300;
+                this.hunter.body.gravity.y = 300;
 
                 // Hunter bounce
-                hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
+                this.hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
 
-            }
+            //}
 
 //-----------------------------Adding Health---------------------------------
 
