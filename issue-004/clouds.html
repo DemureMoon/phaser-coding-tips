@@ -200,7 +200,9 @@
 
                 // Multiply values by scale so bunnies sit on ground. Needs some work.
                 // bunny.body.setSize(25, 25, 10, 20)
-                bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+
+                //SMB: added semicolon
+                bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5);
 
                 // Let gravity do its thing
                 bunny.body.gravity.y = 300;
@@ -217,7 +219,9 @@
                 bunny.scale.x = (.6 * this.direction);
                 bunny.scale.y = .6;
                 bunny.body.collideWorldBounds = true;
-                bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
+
+                // SMB: added semicolon
+                bunny.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5);
                 bunny.body.gravity.y = 300;
                 bunny.body.bounce.y = 0.7 + Math.random() * 0.2;
             }
@@ -461,12 +465,13 @@
     // Added scoring
     function collectBunny (player, bunny) {
 
-    // Removes the bunny from the screen
-    bunny.kill();
-    this.score += 10;
-    this.scoreText.text = 'Score: ' + this.score;
-    this.health += 1;
-    this.healthText.text = 'Health: ' + this.health;
+        // Removes the bunny from the screen
+        // SMB: indented
+        bunny.kill();
+        this.score += 10;
+        this.scoreText.text = 'Score: ' + this.score;
+        this.health += 1;
+        this.healthText.text = 'Health: ' + this.health;
 
     }
 
@@ -494,6 +499,8 @@
             this.background = this.add.tileSprite(0, 0, 1905, 995, 'killScreen');
             gameOver();
         }
+    // SMB: added missing end bracket
+    }
 
     function gameOver () {
         game.state.start('Game');
