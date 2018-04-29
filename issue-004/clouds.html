@@ -121,7 +121,6 @@
             //2
             this.stationary.create(400, 290, 'platform');
             //3
-            this.stationary.create(640, 340, 'platform');
             this.stationary.create(650, 230, 'platform');
             this.stationary.create(784, 230, 'platform');
             this.stationary.create(918, 230, 'platform');
@@ -260,9 +259,10 @@
             this.player = this.add.sprite(0, 300, 'flynn');
             this.physics.arcade.enable(this.player);
 
+            //this.player.anchor.setTo(0.1, 0.1);
             this.player.body.collideWorldBounds = true;
             //(90, 52, 0, 0)
-            this.player.body.setSize(90, 52, 0, 0);
+            this.player.body.setSize(90, 52, -10, 0);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
