@@ -116,19 +116,30 @@
             this.stationary = this.add.physicsGroup();
 
             // PLatforms
-            this.stationary.create(170, 360, 'platform');
+            //1
+            this.stationary.create(170, 330, 'platform');
+            //2
             this.stationary.create(400, 290, 'platform');
+            //3
+            this.stationary.create(640, 340, 'platform');
             this.stationary.create(650, 230, 'platform');
             this.stationary.create(784, 230, 'platform');
-            this.stationary.create(918, 199, 'platform');
-            this.stationary.create(1052, 199, 'platform');
+            this.stationary.create(918, 230, 'platform');
+            this.stationary.create(1052, 230, 'platform');
+            //4
             this.stationary.create(1110, 100, 'platform');
             this.stationary.create(1244, 100, 'platform');
             this.stationary.create(1378, 100, 'platform');
+            //5
+            this.stationary.create(940, 10, 'platform');
+            this.stationary.create(780, -70, 'platform');
             this.stationary.create(1200, 290, 'platform');
             this.stationary.create(1334, 290, 'platform');
             this.stationary.create(1468, 290, 'platform');
             this.stationary.create(1602, 290, 'platform');
+            this.stationary.create(1850, 210, 'platform');
+            this.stationary.create(1800, 330, 'platform');
+
 
 
             // Ground
@@ -147,6 +158,25 @@
             this.stationary.create(1608, 450, 'platform');
             this.stationary.create(1742, 450, 'platform');
             this.stationary.create(1876, 450, 'platform');
+            this.stationary.create(2010, 450, 'platform');
+            this.stationary.create(2144, 450, 'platform');
+            this.stationary.create(2278, 450, 'platform');
+            this.stationary.create(2412, 450, 'platform');
+            this.stationary.create(2546, 450, 'platform');
+            this.stationary.create(2680, 450, 'platform');
+            this.stationary.create(2814, 450, 'platform');
+            this.stationary.create(2948, 450, 'platform');
+            this.stationary.create(3082, 450, 'platform');
+            this.stationary.create(3216, 450, 'platform');
+            this.stationary.create(3350, 450, 'platform');
+            this.stationary.create(3484, 450, 'platform');
+            this.stationary.create(3618, 450, 'platform');
+            this.stationary.create(3752, 450, 'platform');
+            this.stationary.create(3886, 450, 'platform');
+            this.stationary.create(4020, 450, 'platform');
+            this.stationary.create(4154, 450, 'platform');
+            this.stationary.create(4288, 450, 'platform');
+            this.stationary.create(4422, 450, 'platform');
 
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
@@ -274,8 +304,6 @@
                 // Huter size (might make x value smaller so it's possibly easier not to hit the hunter if Flynn gets too close)
                 //hunter.body.setSize(35, 128, 0, 0);
 
-                this.hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
-
                 // Gravity
                 this.hunter.body.gravity.y = 300;
 
@@ -283,7 +311,7 @@
                 this.hunter.body.bounce.y = Math.random() * .8;
 
                 // Hunter movement
-                this.hunter.body.velocity.x = -10 * this.hunterDirection;
+                this.hunter.body.velocity.x = -100 * this.hunterDirection;
                 // this.hunter.animations.add('right', [10, 9, 8, 7, 6], 10, true);
                 // this.hunter.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
