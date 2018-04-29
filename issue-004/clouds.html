@@ -52,7 +52,7 @@
             this.game.renderer.renderSession.roundPixels = true;
 
             // If y is multiplied by 2 it will change the height of the world and bunny spawn
-            this.world.resize(640*7, 480);
+            this.world.resize(640*7, 995);
 
             this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -116,37 +116,66 @@
             this.stationary = this.add.physicsGroup();
 
             // PLatforms
-            this.stationary.create(170, 360, 'platform');
-            this.stationary.create(400, 290, 'platform');
-            this.stationary.create(650, 230, 'platform');
-            this.stationary.create(784, 230, 'platform');
-            this.stationary.create(918, 199, 'platform');
-            this.stationary.create(1052, 199, 'platform');
-            this.stationary.create(1110, 100, 'platform');
-            this.stationary.create(1244, 100, 'platform');
-            this.stationary.create(1378, 100, 'platform');
-            this.stationary.create(1200, 290, 'platform');
-            this.stationary.create(1334, 290, 'platform');
-            this.stationary.create(1468, 290, 'platform');
-            this.stationary.create(1602, 290, 'platform');
+            //1
+            this.stationary.create(170, 330 + 515, 'platform');
+            //2
+            this.stationary.create(400, 290 + 515, 'platform');
+            //3
+            this.stationary.create(650, 230 + 515, 'platform');
+            this.stationary.create(784, 230 + 515, 'platform');
+            this.stationary.create(918, 230 + 515, 'platform');
+            this.stationary.create(1052, 230 + 515, 'platform');
+            //4
+            this.stationary.create(1110, 100 + 515, 'platform');
+            this.stationary.create(1244, 100 + 515, 'platform');
+            this.stationary.create(1378, 100 + 515, 'platform');
+            //5
+            this.stationary.create(940, 10 + 515, 'platform');
+            this.stationary.create(780, -70 + 515, 'platform');
+            this.stationary.create(1200, 290 + 515, 'platform');
+            this.stationary.create(1334, 290 + 515, 'platform');
+            this.stationary.create(1468, 290 + 515, 'platform');
+            this.stationary.create(1602, 290 + 515, 'platform');
+            this.stationary.create(1850, 210 + 515, 'platform');
+            this.stationary.create(1800, 330 + 515, 'platform');
+
 
 
             // Ground
-            this.stationary.create(0, 450, 'platform');
-            this.stationary.create(134, 450, 'platform');
-            this.stationary.create(268, 450, 'platform');
-            this.stationary.create(402, 450, 'platform');
-            this.stationary.create(536, 450, 'platform');
-            this.stationary.create(670, 450, 'platform');
-            this.stationary.create(804, 450, 'platform');
-            this.stationary.create(938, 450, 'platform');
-            this.stationary.create(1072, 450, 'platform');
-            this.stationary.create(1206, 450, 'platform');
-            this.stationary.create(1340, 450, 'platform');
-            this.stationary.create(1474, 450, 'platform');
-            this.stationary.create(1608, 450, 'platform');
-            this.stationary.create(1742, 450, 'platform');
-            this.stationary.create(1876, 450, 'platform');
+            this.stationary.create(0, 450 + 515, 'platform');
+            this.stationary.create(134, 450 + 515, 'platform');
+            this.stationary.create(268, 450 + 515, 'platform');
+            this.stationary.create(402, 450 + 515, 'platform');
+            this.stationary.create(536, 450 + 515, 'platform');
+            this.stationary.create(670, 450 + 515, 'platform');
+            this.stationary.create(804, 450 + 515, 'platform');
+            this.stationary.create(938, 450 + 515, 'platform');
+            this.stationary.create(1072, 450 + 515, 'platform');
+            this.stationary.create(1206, 450 + 515, 'platform');
+            this.stationary.create(1340, 450 + 515, 'platform');
+            this.stationary.create(1474, 450 + 515, 'platform');
+            this.stationary.create(1608, 450 + 515, 'platform');
+            this.stationary.create(1742, 450 + 515, 'platform');
+            this.stationary.create(1876, 450 + 515, 'platform');
+            this.stationary.create(2010, 450 + 515, 'platform');
+            this.stationary.create(2144, 450 + 515, 'platform');
+            this.stationary.create(2278, 450 + 515, 'platform');
+            this.stationary.create(2412, 965, 'platform');
+            this.stationary.create(2546, 965, 'platform');
+            this.stationary.create(2680, 965, 'platform');
+            this.stationary.create(2814, 965, 'platform');
+            this.stationary.create(2948, 965, 'platform');
+            this.stationary.create(3082, 965, 'platform');
+            this.stationary.create(3216, 965, 'platform');
+            this.stationary.create(3350, 965, 'platform');
+            this.stationary.create(3484, 965, 'platform');
+            this.stationary.create(3618, 965, 'platform');
+            this.stationary.create(3752, 965, 'platform');
+            this.stationary.create(3886, 965, 'platform');
+            this.stationary.create(4020, 965, 'platform');
+            this.stationary.create(4154, 965, 'platform');
+            this.stationary.create(4288, 965, 'platform');
+            this.stationary.create(4422, 965, 'platform');
 
             this.stationary.setAll('body.allowGravity', false);
             this.stationary.setAll('body.immovable', true);
@@ -230,9 +259,10 @@
             this.player = this.add.sprite(0, 300, 'flynn');
             this.physics.arcade.enable(this.player);
 
+            //this.player.anchor.setTo(0.1, 0.1);
             this.player.body.collideWorldBounds = true;
             //(90, 52, 0, 0)
-            this.player.body.setSize(90, 52, 0, 0);
+            this.player.body.setSize(90, 52, -10, 0);
 
             this.player.animations.add('right', [10, 9, 8, 7, 6], 10, true);
             this.player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
@@ -274,8 +304,6 @@
                 // Huter size (might make x value smaller so it's possibly easier not to hit the hunter if Flynn gets too close)
                 //hunter.body.setSize(35, 128, 0, 0);
 
-                this.hunter.body.setSize(25 * .5, 25 * .5, 10 * .5, 20 * .5)
-
                 // Gravity
                 this.hunter.body.gravity.y = 300;
 
@@ -283,7 +311,7 @@
                 this.hunter.body.bounce.y = Math.random() * .8;
 
                 // Hunter movement
-                this.hunter.body.velocity.x = -10 * this.hunterDirection;
+                this.hunter.body.velocity.x = -100 * this.hunterDirection;
                 // this.hunter.animations.add('right', [10, 9, 8, 7, 6], 10, true);
                 // this.hunter.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
