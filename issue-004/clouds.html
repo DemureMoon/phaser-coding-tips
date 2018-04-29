@@ -252,6 +252,8 @@
             // Initializing the Hunter
             // this.hunter = game.add.group();
             this.hunter = this.add.sprite(Math.random() * 1000, Math.random() * 1000, 'hunter');
+            this.hunterDirection = this.rnd.between(-1, 1);
+            this.hunter.anchor.setTo(0.5, 0.5);
 
             // We will enable physics for any hunter that is created in this group
             //this.hunter.enableBody = true;
@@ -263,7 +265,7 @@
             //{
               //  var hunter = this.hunter.create((i + Math.random()) * 290, 210, 'hunter');
 
-                this.hunter.scale.x = (.6 * this.direction);
+                this.hunter.scale.x = (.6 * this.hunterDirection);
                 this.hunter.anchor.setTo(0.5, 0.5);
                 this.hunter.scale.y = .6;
 
@@ -278,7 +280,12 @@
                 this.hunter.body.gravity.y = 300;
 
                 // Hunter bounce
-                this.hunter.body.bounce.y = 0.7 + Math.random() * 0.2;
+                this.hunter.body.bounce.y = Math.random() * .8;
+
+                // Hunter movement
+                this.hunter.body.velocity.x = -10 * this.hunterDirection;
+                // this.hunter.animations.add('right', [10, 9, 8, 7, 6], 10, true);
+                // this.hunter.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
             //}
 
