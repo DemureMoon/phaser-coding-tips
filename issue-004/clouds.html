@@ -22,6 +22,7 @@
         this.bg = null;
         this.trees = null;
         this.killScreen;
+        this.titleScreen;
 
         this.player = null;
 
@@ -77,6 +78,7 @@
             this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png');
             this.load.image('hunter', 'assets/Hunter Stillframe35x128.png', 35, 128);
             this.load.image('killScreen', 'assets/killScreen1905x995.png', 1905, 995);
+            this.load.image('titleScreen', 'assets/titleScreen.png', 1905, 995,);
         },
 
 
@@ -98,19 +100,13 @@
             // frame	string | number
             // If this TileSprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
 
-
         create: function () {
-
 
             this.background = this.add.tileSprite(0, 0, 2000, 1000, 'background');
             this.background.fixedToCamera = true;
 
             this.trees = this.add.tileSprite(0, 1000-116-18, 2000, 116, 'trees');
             this.trees.fixedToCamera = true;
-
-            // this.trees.scale.x = 2;
-            // this.trees.scale.y = 2;
-
 
             // Platforms that don't move
             this.stationary = this.add.physicsGroup();
@@ -202,6 +198,7 @@
 
             // We will enable physics for any bunny that is created in this group
             this.bunnies.enableBody = true;
+
 
             // Here we'll create them randomly spaced apart
             for (var i = 3; i < 60; i++)
@@ -528,14 +525,16 @@
         else
         {
             hunter.kill();
-            this.health -= 5;
+            this.health -=5;
             this.healthText.text = 'Health:' + this.health;
         }
 
         if (this.health < 0)
         {
             this.background = this.add.tileSprite(0, 0, 1905, 995, 'killScreen');
-            gameOver();
+            this.camera.follow(this.background);
+            //killScreen.onkeypress = function(){gameOver};
+            setTimeout(gameOver, 2000);
         }
     // SMB: added missing end bracket
     }
