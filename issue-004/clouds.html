@@ -31,6 +31,7 @@
         this.leftHeart = null;
         this.rightHeart = null;
         this.hunter = null;
+        this.hunter2 = null;
         this.collectBunny = null;
 
         this.facing = 'left';
@@ -74,9 +75,10 @@
             this.load.image('platform', 'assets/OfficialPlatform134x32.png', 134, 32);
             this.load.spritesheet('flynn', 'assets/Flynn_Sprite_Sheet_990x52.png', 90, 52);
             this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
-            this.load.image('leftHeart', 'assets/HalfHeart19x30.png');
+            this.load.image('leftHeart', 'assets/HalfHeart19x30.pKianang');
             this.load.image('rightHeart', 'assets/RightHalfHeart21x30.png');
             this.load.image('hunter', 'assets/HunterBow79x128.png', 79, 128);
+            this.load.image('hunter2', 'assets/HunterBow79x128.png', 79, 128);
             this.load.image('killScreen', 'assets/killScreen1905x995.png', 1905, 995);
             this.load.image('titleScreen', 'assets/titleScreen.png', 1905, 995,);
         },
@@ -286,12 +288,6 @@
             //this.hunter.enableBody = true;
             this.physics.arcade.enable(this.hunter);
 
-
-            //  Create them randomly spaced apart
-            //for (var i = 1; i <=10; i++)
-            //{
-              //  var hunter = this.hunter.create((i + Math.random()) * 290, 210, 'hunter');
-
                 this.hunter.scale.x = (.6 * this.hunterDirection);
                 this.hunter.anchor.setTo(0.5, 0.5);
                 this.hunter.scale.y = .6;
@@ -309,10 +305,24 @@
 
                 // Hunter movement
                 this.hunter.body.velocity.x = -100 * this.hunterDirection;
-                // this.hunter.animations.add('right', [10, 9, 8, 7, 6], 10, true);
-                // this.hunter.animations.add('left', [0, 1, 2, 3, 4], 10, true);
 
-            //}
+//-----Second Hunter-----
+            this.hunter2 = this.add.sprite(Math.random() * 1000, Math.random() * 1000, 'hunter2');
+            this.hunter2Direction = this.rnd.between(-1, 1);
+            this.hunter2.anchor.setTo(0.5, 0.5);
+
+            this.physics.arcade.enable(this.hunter2);
+
+            this.hunter2.scale.x = (.6 * this.hunter2Direction);
+                this.hunter2.anchor.setTo(0.5, 0.5);
+                this.hunter2.scale.y = .6;
+
+                this.hunter2.body.collideWorldBounds = true;
+
+            this.hunter2.body.gravity.y = 300;
+            this.hunter2.body.bounce.y = Math.random() * .8;
+
+            this.hunter2.body.velocity.x = -100 * this.hunter2Direction;
 
 //-----------------------------Adding Health---------------------------------
 
@@ -426,6 +436,7 @@
             this.physics.arcade.collide(this.bunnies, this.stationary);
 
             this.physics.arcade.collide(this.hunter, this.stationary);
+            this.physics.arcade.collide(this.hunter2, this.stationary);
 
 
             // Checks to see if the player overlaps with any of the bunnies, if he does call the collectBunny function
@@ -435,8 +446,11 @@
 
             //checks to see if player collides with hunters
             this.game.physics.arcade.overlap(this.player, this.hunter, loseHealth, null, this);
+            this.game.physics.arcade.overlap(this.player, this.hunter2, loseHealth, null, this);
 
             this.player.body.velocity.x = 0;
+            this.hunter2.body.velocity.x = -100 * this.hunter2Direction;
+            this.hunter.body.velocity.x = -100 * this.hunterDirection;
 
             if (this.cursors.left.isDown)
             {
@@ -511,7 +525,7 @@
     }
 
     //Losing health
-    function loseHealth (player, hunter) {
+    function loseHealth (player, hunter, hunter2) {
         //hunter.kill();
         //this.health -= 5;
         //this.healthText.text = 'Health:' + this.health;
