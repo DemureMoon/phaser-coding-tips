@@ -21,6 +21,7 @@
 
         this.bg = null;
         this.trees = null;
+        this.Door = null;
         this.killScreen;
         this.titleScreen;
 
@@ -30,6 +31,7 @@
         this.bunnies = null;
         this.hunter = null;
         this.hunter2 = null;
+        this.hunter3 = null;
         this.collectBunny = null;
 
         this.facing = 'left';
@@ -75,8 +77,10 @@
             this.load.spritesheet('bunny', 'assets/Bunny45x45.png', 45, 45);
             this.load.image('hunter', 'assets/HunterBow79x128.png', 79, 128);
             this.load.image('hunter2', 'assets/HunterBow79x128.png', 79, 128);
+            this.load.image('hunter3', 'assets/HunterBow79x128.png', 79, 128);
             this.load.image('killScreen', 'assets/killScreen1905x995.png', 1905, 995);
-            this.load.image('titleScreen', 'assets/titleScreen.png', 1905, 995,);
+            this.load.image('titleScreen', 'assets/titleScreen.png', 1905, 995);
+            this.load.image('door', 'assets/PixelDoor.png', 121, 180);
         },
 
 
@@ -105,6 +109,10 @@
 
             this.trees = this.add.tileSprite(0, 1000-116-18, 2000, 116, 'trees');
             this.trees.fixedToCamera = true;
+
+            this.door = this.add.sprite(3480, 385, 'door');
+            //this.door('body.allowGravity', false);
+            //this.door('body.immovable', true);
 
             // Platforms that don't move
             this.stationary = this.add.physicsGroup();
@@ -308,7 +316,7 @@
 
             // Initializing the Hunter
             // this.hunter = game.add.group();
-            this.hunter = this.add.sprite(Math.random() * 1200, Math.random() * 1000, 'hunter');
+            this.hunter = this.add.sprite(Math.random() * 2800, Math.random() * 1500, 'hunter');
             this.hunterDirection = this.rnd.between(-1, 1);
             this.hunter.anchor.setTo(0.5, 0.5);
 
@@ -317,7 +325,6 @@
             this.physics.arcade.enable(this.hunter);
 
                 this.hunter.scale.x = (.6 * this.hunterDirection);
-                //this.hunter.anchor.setTo(0.5, 0.5);
                 this.hunter.scale.y = .6;
 
                 this.hunter.body.collideWorldBounds = true;
@@ -335,14 +342,13 @@
                 this.hunter.body.velocity.x = -100 * this.hunterDirection;
 
 //-----Second Hunter-----
-            this.hunter2 = this.add.sprite(Math.random() * 1200, Math.random() * 1000, 'hunter2');
+            this.hunter2 = this.add.sprite(Math.random() * 2500, Math.random() * 700, 'hunter2');
             this.hunter2Direction = this.rnd.between(-1, 1);
             this.hunter2.anchor.setTo(0.5, 0.5);
 
             this.physics.arcade.enable(this.hunter2);
 
             this.hunter2.scale.x = (.6 * this.hunter2Direction);
-                //this.hunter2.anchor.setTo(0.5, 0.5);
                 this.hunter2.scale.y = .6;
 
                 this.hunter2.body.collideWorldBounds = true;
@@ -351,6 +357,24 @@
             this.hunter2.body.bounce.y = Math.random() * .8;
 
             this.hunter2.body.velocity.x = -100 * this.hunter2Direction;
+
+//-----Third Hunter-----
+            this.hunter3 = this.add.sprite(Math.random() * 3400, Math.random() * 500, 'hunter3');
+            this.hunter3Direction = this.rnd.between(-1, 1);
+            this.hunter3.anchor.setTo(0.5, 0.5);
+
+            this.physics.arcade.enable(this.hunter3);
+
+            this.hunter3.scale.x = (.6 * this.hunter3Direction);
+                this.hunter3.scale.y = .6;
+
+                this.hunter3.body.collideWorldBounds = true;
+
+            this.hunter3.body.gravity.y = 300;
+            this.hunter3.body.bounce.y = Math.random() * .8;
+
+            this.hunter3.body.velocity.x = -100 * this.hunter3Direction;
+
 
 //-----------------------------Adding Health---------------------------------
 
@@ -465,6 +489,7 @@
 
             this.physics.arcade.collide(this.hunter, this.stationary);
             this.physics.arcade.collide(this.hunter2, this.stationary);
+            this.physics.arcade.collide(this.hunter3, this.stationary);
 
 
             // Checks to see if the player overlaps with any of the bunnies, if he does call the collectBunny function
@@ -475,8 +500,10 @@
             //checks to see if player collides with hunters
             this.game.physics.arcade.overlap(this.player, this.hunter, loseHealth, null, this);
             this.game.physics.arcade.overlap(this.player, this.hunter2, loseHealth, null, this);
+            this.game.physics.arcade.overlap(this.player, this.hunter3, loseHealth, null, this);
 
             this.player.body.velocity.x = 0;
+            this.hunter3.body.velocity.x = -100 * this.hunter3Direction;
             this.hunter2.body.velocity.x = -100 * this.hunter2Direction;
             this.hunter.body.velocity.x = -100 * this.hunterDirection;
 
@@ -545,7 +572,7 @@
         // Removes the bunny from the screen
         // SMB: indented
         bunny.kill();
-        this.score += 10;
+        this.score += 5;
         this.scoreText.text = 'Score: ' + this.score;
         this.health += 1;
         this.healthText.text = 'Health: ' + this.health;
@@ -553,7 +580,7 @@
     }
 
     //Losing health
-    function loseHealth (player, hunter, hunter2) {
+    function loseHealth (player, hunter, hunter2, hunter3) {
         //hunter.kill();
         //this.health -= 5;
         //this.healthText.text = 'Health:' + this.health;
@@ -567,7 +594,7 @@
         else
         {
             hunter.kill();
-            this.health -=5;
+            this.health -=10;
             this.healthText.text = 'Health:' + this.health;
         }
 
@@ -576,7 +603,7 @@
             this.background = this.add.tileSprite(0, 0, 1905, 995, 'killScreen');
             this.camera.follow(this.background);
             //killScreen.onkeypress = function(){gameOver};
-            setTimeout(gameOver, 2000);
+            setTimeout(gameOver, 1500);
         }
     // SMB: added missing end bracket
     }
