@@ -124,9 +124,9 @@
             this.stationary.create(918, 230 + 515, 'platform');
             this.stationary.create(1052, 230 + 515, 'platform');
             //4
-            this.stationary.create(1110, 100 + 515, 'platform');
-            this.stationary.create(1244, 100 + 515, 'platform');
-            this.stationary.create(1378, 100 + 515, 'platform');
+            this.stationary.create(1110, 100 + 530, 'platform');
+            this.stationary.create(1244, 100 + 530, 'platform');
+            this.stationary.create(1378, 100 + 530, 'platform');
             //5
             this.stationary.create(940, 10 + 515, 'platform');
             this.stationary.create(780, -70 + 515, 'platform');
@@ -134,8 +134,40 @@
             this.stationary.create(1334, 290 + 515, 'platform');
             this.stationary.create(1468, 290 + 515, 'platform');
             this.stationary.create(1602, 290 + 515, 'platform');
-            this.stationary.create(1850, 210 + 515, 'platform');
-            this.stationary.create(1800, 330 + 515, 'platform');
+            //5.5 (bottom stairs)
+            this.stationary.create(1850, 725, 'platform');
+            this.stationary.create(1984, 725, 'platform');
+            this.stationary.create(2118, 693, 'platform');
+            this.stationary.create(2252, 661, 'platform');
+            this.stationary.create(2386, 629, 'platform');
+            this.stationary.create(2520, 597, 'platform');
+            this.stationary.create(2654, 565, 'platform');
+            //6 (above stairs)
+            this.stationary.create(1650, 550, 'platform');
+            this.stationary.create(1784, 550, 'platform');
+            this.stationary.create(1886, 430, 'platform');
+            this.stationary.create(2020, 430, 'platform');
+            this.stationary.create(2174, 350, 'platform');
+            this.stationary.create(2328, 300, 'platform');
+            this.stationary.create(2462, 300, 'platform');
+            this.stationary.create(2596, 300, 'platform');
+            this.stationary.create(2730, 332, 'platform');
+            this.stationary.create(2864, 364, 'platform');
+            this.stationary.create(2998, 396, 'platform');
+            //7 (flat platform after bottom stairs)
+            this.stationary.create(2820, 565, 'platform');
+            this.stationary.create(2954, 565, 'platform');
+            this.stationary.create(3088, 565, 'platform');
+            this.stationary.create(3222, 565, 'platform');
+            this.stationary.create(3356, 565, 'platform');
+            this.stationary.create(3490, 565, 'platform');
+            //8 (farthest bottom platforms)
+            this.stationary.create(2690, 840, 'platform');
+            this.stationary.create(2850, 800, 'platform');
+            this.stationary.create(3082, 760, 'platform');
+            this.stationary.create(3216, 760, 'platform');
+            this.stationary.create(3350, 760, 'platform');
+
 
 
 
@@ -280,7 +312,7 @@
 
             // Initializing the Hunter
             // this.hunter = game.add.group();
-            this.hunter = this.add.sprite(Math.random() * 1000, Math.random() * 1000, 'hunter');
+            this.hunter = this.add.sprite(Math.random() * 1200, Math.random() * 1000, 'hunter');
             this.hunterDirection = this.rnd.between(-1, 1);
             this.hunter.anchor.setTo(0.5, 0.5);
 
@@ -289,7 +321,7 @@
             this.physics.arcade.enable(this.hunter);
 
                 this.hunter.scale.x = (.6 * this.hunterDirection);
-                this.hunter.anchor.setTo(0.5, 0.5);
+                //this.hunter.anchor.setTo(0.5, 0.5);
                 this.hunter.scale.y = .6;
 
                 this.hunter.body.collideWorldBounds = true;
@@ -307,14 +339,14 @@
                 this.hunter.body.velocity.x = -100 * this.hunterDirection;
 
 //-----Second Hunter-----
-            this.hunter2 = this.add.sprite(Math.random() * 1000, Math.random() * 1000, 'hunter2');
+            this.hunter2 = this.add.sprite(Math.random() * 1200, Math.random() * 1000, 'hunter2');
             this.hunter2Direction = this.rnd.between(-1, 1);
             this.hunter2.anchor.setTo(0.5, 0.5);
 
             this.physics.arcade.enable(this.hunter2);
 
             this.hunter2.scale.x = (.6 * this.hunter2Direction);
-                this.hunter2.anchor.setTo(0.5, 0.5);
+                //this.hunter2.anchor.setTo(0.5, 0.5);
                 this.hunter2.scale.y = .6;
 
                 this.hunter2.body.collideWorldBounds = true;
